@@ -1,0 +1,88 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+    font-family: 'Baloo Chettan 2', cursive;
+}
+
+.bg-gratify {
+    background: linear-gradient(332deg, #f1ecff, rgba(255, 255, 235, 0.78), rgba(221, 255, 255, 0.34));
+    background:
+            radial-gradient(
+                    circle at top left,
+                    rgba(0, 173, 181, 0.13),
+                    transparent 1200px
+            ),
+            radial-gradient(
+                    circle at top right,
+                    rgba(243, 223, 255, 0.35),
+                    transparent 1000px
+            ),
+            radial-gradient(
+                    at bottom left,
+                    rgba(255, 240, 189, 0.36),
+                    transparent 500px
+            ),
+            radial-gradient(
+                    at bottom right,
+                    rgba(243, 223, 255, 0.5),
+                    transparent 400px
+            );
+}
+
+.ripple {
+    animation-name: ripple-animation;
+    animation-duration: 3s;
+    animation-iteration-count: infinite;
+    transform-origin: 70% 70%;
+    animation-timing-function: linear;
+    display: inline-block;
+}
+
+@keyframes ripple-animation {
+    0% {
+        /*opacity: 0.6;*/
+        transform: scale(1.0);
+    }
+    10% {
+        /*opacity: 0.5;*/
+        transform: scale(1.1);
+    }
+    20% {
+        /*opacity: 0.4;*/
+        transform: scale(1.2);
+    }
+    30% {
+        /*opacity: 0.3;*/
+        transform: scale(1.3);
+    }
+    40% {
+        /*opacity: 0.2;*/
+        transform: scale(1.4);
+    }
+    50% {
+        /*opacity: 0.2;*/
+        transform: scale(1.5);
+    }
+    60% {
+        /*opacity: 0.2;*/
+        transform: scale(1.4);
+    }
+    70% {
+        /*opacity: 0.3;*/
+        transform: scale(1.3);
+    }
+    80% {
+        /*opacity: 0.4;*/
+        transform: scale(1.2);
+    }
+    90% {
+        /*opacity: 0.5;*/
+        transform: scale(1.1);
+    }
+    100% {
+        /*opacity: 0.6;*/
+        transform: scale(1.0);
+    }
+}
