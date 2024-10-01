@@ -53,10 +53,11 @@ export default function Home(props) {
                     method: "POST", headers: {"Content-Type": "application/json"},
                     body: JSON.stringify(json),
                 };
-                let response = await fetch(`${baseURL}/parse-idl`, options);
+                let response = await fetch('/api/parse-idl', options);
                 let body = await response.json();
                 setDappDetails(body);
             } catch (error) {
+                console.log('error', error)
             }
         };
         reader.readAsText(file);
@@ -80,7 +81,7 @@ export default function Home(props) {
             headers: {"Content-Type": "application/json"},
             body: JSON.stringify({dapp_address: dappAddress})
         };
-        let response = await fetch(`${baseURL}/fetch-parser`, options);
+        let response = await fetch('/api/fetch-parser', options);
         let body = await response.json();
         setDappDetails(body);
         setDappDetailsInProgress(false);
