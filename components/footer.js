@@ -1,23 +1,14 @@
-import Link from "next/link";
+import React from "react";
 
 const Footer = () => {
     return (
-        <>
-            <footer className="container px-8 md:px-16">
-                <div className="pb-8 text-xs flex flex-col md:flex-row-reverse items-center md:items-end">
-                    <div className="mb-4 md:mb-0">
-                        <Link
-                            className="text-lts hover:text-accent transition mr-4 md:mr-8"
-                            href="https://topledger.xyz/"
-                            target="_blank"
-                        >
-                            About
-                        </Link>
-                    </div>
-                    <span className="grow text-left text-dts">© 2024 Top Ledger Pte Ltd, All rights reserved.</span>
-                </div>
-            </footer>
-        </>
+        <footer className="container px-8 md:px-16 min-h-[100px] flex items-center">
+            <div className="text-xs flex flex-col md:flex-row-reverse items-center md:items-end">
+                <span className="grow text-left text-[#657082] text-[13px]">
+                    © 2024 Top Ledger Pte Ltd, All rights reserved.
+                </span>
+            </div>
+        </footer>
     );
 };
 

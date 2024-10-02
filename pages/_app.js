@@ -1,8 +1,12 @@
+import ReactQueryProvider from "../components/ReactQueryProvider";
 import "../styles/globals.css";
-import Home from "./home";
 
-function MyApp({Component, pageProps}) {
-    return (<Home/>);
+function MyApp({ Component, pageProps }) {
+    return (
+        <ReactQueryProvider>
+            <Component />
+        </ReactQueryProvider>
+    );
 }
 
 export default MyApp;

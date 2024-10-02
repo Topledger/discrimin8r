@@ -12,9 +12,8 @@ const idlParserApi = axios.create({
  */
 export default async function handler(req, res) {
     const body = req.body;
-    console.log('request body', body);
 
     const response = await idlParserApi.post('parse-idl', body);
-    console.log('response data', response.data);
-    res.status(200).json(response.data)
+
+    res.status(200).json(response.data);
 }
