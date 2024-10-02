@@ -93,7 +93,7 @@ export default function Home(props) {
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify(json),
                 };
-                let response = await fetch("/api/parse-idl", options);
+                let response = await fetch("https://apis.topledger.xyz/api/parse-idl", options);
                 let body = await response.json();
                 setDappDetails(body);
                 setDappDetailsInProgress(false);
