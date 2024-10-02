@@ -4,9 +4,10 @@ import {} from "react-code-blocks/dist";
 import Page from "../components/Page";
 import CodeBlock from "../components/CodeBlock";
 
-const UploadButton = ({ onChange, isLoading }) => (
+const UploadButton = ({ onChange, text, isLoading, value }) => (
     <div className="">
         <input
+            value={value}
             id="idl-file"
             type="file"
             name="media_file"
@@ -55,12 +56,21 @@ const UploadButton = ({ onChange, isLoading }) => (
                     <line x1="12" y1="12" x2="12" y2="21" />
                 </svg>
             )}
-            Upload IDL
+            {text}
         </label>
     </div>
 );
 
 const UploadForm = ({ onChange, isLoading }) => {
+    const [value, setValue] = useState();
+    const [fileName, setFileName] = useState();
+    const handleChange = (event) => {
+        onChange(event);
+        console.log(event.target);
+        setValue(event?.target?.value);
+        const filename = event?.target?.files?.[0]?.name ?? "";
+        setFileName(filename);
+    };
     return (
         <form className="flex flex-col items-center border border-[#CCD8FF] p-10 py-20 w-full bg-[#F6F8FF] rounded-lg gap-4">
             <div className="grow text-[#657082] text-center">
@@ -68,7 +78,30 @@ const UploadForm = ({ onChange, isLoading }) => {
                 <br />
                 input account mappings, fully functional parsers
             </div>
-            <UploadButton onChange={onChange} isLoading={isLoading} />
+            <UploadButton
+                onChange={handleChange}
+                isLoading={isLoading}
+                text={fileName ? "Upload other IDL" : "Upload IDL"}
+                value={value}
+            />
+            {fileName && (
+                <span>
+                    IDL:
+                    <span className="text-sm font-semibold ml-1">
+                        {fileName}
+                    </span>
+                    <button
+                        className="ml-1"
+                        onClick={() => {
+                            onChange(null);
+                            setFileName("");
+                            setValue("");
+                        }}
+                    >
+                        x
+                    </button>
+                </span>
+            )}
         </form>
     );
 };
@@ -81,27 +114,31 @@ export default function Home(props) {
 
     const onMediaFileChange = async (event) => {
         setVerified(false);
-        let files = event.target.files;
-        let file = files[0];
-        const reader = new FileReader();
-        reader.onload = async function (e) {
-            try {
-                setDappDetailsInProgress(true);
-                const json = JSON.parse(e.target.result);
-                const options = {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify(json),
-                };
-                let response = await fetch("/api/parse-idl", options);
-                let body = await response.json();
-                setDappDetails(body);
-                setDappDetailsInProgress(false);
-            } catch (error) {
-                console.log("error", error);
-            }
-        };
-        reader.readAsText(file);
+        let files = event?.target?.files;
+        let file = files?.[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = async function (e) {
+                try {
+                    setDappDetailsInProgress(true);
+                    const json = JSON.parse(e.target.result);
+                    const options = {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify(json),
+                    };
+                    let response = await fetch("/api/parse-idl", options);
+                    let body = await response.json();
+                    setDappDetails(body);
+                    setDappDetailsInProgress(false);
+                } catch (error) {
+                    console.log("error", error);
+                }
+            };
+            reader.readAsText(file);
+        } else {
+            setDappDetails(null);
+        }
     };
 
     return (
