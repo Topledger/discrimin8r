@@ -31,8 +31,8 @@ const Navbar = () => {
                     <div className="flex space-x-7">
                         <div>
                             {/* Website Logo */}
-                            <a
-                                href="#"
+                            <Link
+                                href="/"
                                 className="flex flex-col items-start py-4 px-2"
                             >
                                 <span className="font-semibold text-gray-500 text-[24px]">
@@ -44,7 +44,7 @@ const Navbar = () => {
                                         Top Ledger
                                     </span>
                                 </span>
-                            </a>
+                            </Link>
                         </div>
                     </div>
                     {/* Primary Navbar items */}
