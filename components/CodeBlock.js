@@ -18,8 +18,8 @@ const CodeBlock = ({ title, text, verified }) => {
     }, [copy, text]);
 
     const footerClass = twMerge(
-        "w-full text-center border-lbr border-b border-l border-r rounded-b text-xs px-2 h-[49px] flex items-center justify-center",
-        verified ? "bg-bgsuccess text-success" : "bg-lbt"
+        "w-full text-center border rounded-b text-[14px] px-2 h-[49px] flex items-center justify-center border-[#ddd]",
+        verified ? "bg-[#D7FFEC] text-[#62B890] border-[#A8F1CF]" : "bg-lbt"
     );
     return (
         <div className={twMerge("m-4 w-full", styles.codeBlock)}>
