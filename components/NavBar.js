@@ -19,7 +19,7 @@ const Navbar = () => {
 
     return (
         <nav className="border-b border-[#C3CFFF]">
-            <div className="max-w-6xl mx-auto px-4">
+            <div className="px-32">
                 <div className="flex justify-between">
                     <div className="flex space-x-7">
                         <div>
