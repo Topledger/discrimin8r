@@ -1,0 +1,7 @@
+.codeBlock {
+    :global {
+        button[aria-label="Copy Code"] {
+            display: none;
+        }
+    }
+}

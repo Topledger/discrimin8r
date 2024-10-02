@@ -6,6 +6,10 @@
     font-family: 'Baloo Chettan 2', cursive;
 }
 
+* {
+    color: black;
+}
+
 .bg-gratify {
     background: linear-gradient(332deg, #f1ecff, rgba(255, 255, 235, 0.78), rgba(221, 255, 255, 0.34));
     background:
