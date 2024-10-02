@@ -22,7 +22,7 @@ const CodeBlock = ({ title, text, verified }) => {
         verified ? "bg-[#D7FFEC] text-[#62B890] border-[#A8F1CF]" : "bg-lbt"
     );
     return (
-        <div className={twMerge("m-4 w-full", styles.codeBlock)}>
+        <div className={twMerge("w-full", styles.codeBlock)}>
             <div className="bg-[#d6e7ff] text-[14px] px-2 border border-[#CCD8FF] rounded-tl rounded-tr w-full text-[#576EB7] font-semibold h-[49px] flex items-center justify-between">
                 {title}
                 {text && (
