@@ -7,7 +7,7 @@ import Modal from "../components/modal";
 import {CopyBlock} from 'react-code-blocks';
 
 export default function Home(props) {
-    const baseURL = "http://20.127.150.5:8081";
+    const baseURL = "https://apis.topledger.xyz";
     const [modalConfig, setModalConfig] = useState({show: false});
     const [dappDetailsInProgress, setDappDetailsInProgress] = useState(false);
     const [dappDetails, setDappDetails] = useState(null);
