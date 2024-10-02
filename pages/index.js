@@ -107,7 +107,7 @@ export default function Home(props) {
     return (
         <Page>
             <main className="flex items-center justify-center">
-                <div className="flex flex-col min-w-full items-center px-32 mt-20">
+                <div className="flex flex-col min-w-full items-center px-32 mt-20 flex flex-col gap-8">
                     <UploadForm
                         onChange={onMediaFileChange}
                         isLoading={dappDetailsInProgress}

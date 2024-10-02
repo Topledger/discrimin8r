@@ -794,7 +794,7 @@ function Programs() {
 
     return (
         <Page>
-            <div className="px-32 mt-20">
+            <div className="px-32 mt-8 flex flex-col gap-8">
                 <SearchHeader
                     selectedProgram={selectedProgram}
                     onChange={setSearchText}
