@@ -1,13 +1,20 @@
-import Link from "next/link";
-import React from "react";
+"use client";
 
+import React, { useEffect, useState } from "react";
+import Link from "next/link";
 import { twMerge } from "tailwind-merge";
 
 const getWindow = () => (typeof window === "undefined" ? {} : window);
 
 const Navbar = () => {
-    const selectedUpload = getWindow().location?.href?.endsWith("/");
-    const selectedPrograms = getWindow().location?.href?.endsWith("/programs");
+    const [selectedUpload, setSelectedUpload] = useState();
+    const [selectedPrograms, setSelectedPrograms] = useState();
+
+    useEffect(() => {
+        setSelectedUpload(getWindow().location?.href?.endsWith("/"));
+        setSelectedPrograms(getWindow().location?.href?.endsWith("/programs"));
+    }, []);
+
     const class1 = twMerge(
         "py-4 px-2 font-semibold",
         selectedUpload ? "text-[#3455FF]" : ""
