@@ -773,7 +773,7 @@ function Programs() {
     const { data: dappDetails, isLoading: dappDetailsLoading } = useQuery({
         queryKey: ["ProgramData", selectedProgram?.address],
         queryFn: () => {
-            return fetch("/api/fetch-parser", {
+            return fetch("https://apis.topledger.xyz/api/fetch-parser", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ dapp_address: selectedProgram.address }),
