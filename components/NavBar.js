@@ -31,20 +31,21 @@ const Navbar = () => {
                     <div className="flex space-x-7">
                         <div>
                             {/* Website Logo */}
-                            <Link
-                                href="/"
-                                className="flex flex-col items-start py-4 px-2"
-                            >
-                                <span className="font-semibold text-gray-500 text-[24px]">
-                                    discrimin🎱r
-                                </span>
+                            <span className="flex flex-col items-start py-4 px-2">
+                                <Link href="/">
+                                    <span className="font-semibold text-gray-500 text-[24px]">
+                                        discrimin🎱r
+                                    </span>
+                                </Link>
                                 <span className="font-medium text-sm text-gray-400">
                                     by{" "}
-                                    <span className="font-semibold">
-                                        Top Ledger
-                                    </span>
+                                    <Link href="https://topledger.xyz">
+                                        <span className="font-semibold">
+                                            Top Ledger
+                                        </span>
+                                    </Link>
                                 </span>
-                            </Link>
+                            </span>
                         </div>
                     </div>
                     {/* Primary Navbar items */}
