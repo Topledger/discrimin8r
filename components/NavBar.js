@@ -38,9 +38,9 @@ const Navbar = () => {
                                 <span className="font-semibold text-gray-500 text-[24px]">
                                     discrimin🎱r
                                 </span>
-                                <span className="font-medium text-sm text-gray-400">
+                                <span className="font-medium text-sm text-lts">
                                     by{" "}
-                                    <span className="font-semibold">
+                                    <span className="font-semibold text-lts">
                                         Top Ledger
                                     </span>
                                 </span>
