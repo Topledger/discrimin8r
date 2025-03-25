@@ -52,6 +52,15 @@ const Navbar = () => {
                         <Link href="/" className={class1}>
                             Upload
                         </Link>
+                        <Link href="/instruction-name" className={class1}>
+                            Instruction Name
+                        </Link>
+                        <Link href="/instruction-discriminator" className={class1}>
+                            Instruction Discriminator
+                        </Link>
+                        <Link href="/verify-idl" className={class1}>
+                            Verify IDL
+                        </Link>
                         <Link href="/programs" className={class2}>
                             Search Programs
                         </Link>
