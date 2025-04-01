@@ -64,7 +64,7 @@ const UploadForm = ({ onChange, isLoading }) => {
     return (
         <form className="flex flex-col items-center border border-[#CCD8FF] p-10 py-20 w-full bg-[#F6F8FF] rounded-lg gap-4">
             <div className="grow text-[#657082] text-center">
-                Upload the Anchor IDL to get fully functional python parsers.
+                Upload the Anchor IDL to get fully functional python parser
             </div>
             <UploadButton onChange={onChange} isLoading={isLoading} />
         </form>

@@ -126,7 +126,7 @@ function VerifyIDL() {
                 <div className="mb-6">
                     <h1 className="text-2xl font-bold text-gray-800">Verify IDL</h1>
                     <p className="text-gray-600">
-                        Validate an Anchor-based IDL file for a given dApp address and block slot.
+                        Validate an Anchor-based IDL file for a given dApp address and block slot
                     </p>
                 </div>
                 <VerifyForm

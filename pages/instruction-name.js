@@ -7,7 +7,7 @@ const SearchHeader = ({ value, onChange, onSearch }) => {
             <div className="flex flex-col gap-1">
                 <span className="text-xl font-semibold text-gray-800">Instruction Name</span>
                 <span className="text-sm text-gray-500">
-                    Get the instruction name from a base58 string or hex data for Anchor-based dApps.
+                    Get the instruction name from a base58 string or hex data for Anchor-based programs
                 </span>
             </div>
             <div className="flex items-center space-x-2">
