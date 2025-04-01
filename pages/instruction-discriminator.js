@@ -7,7 +7,7 @@ const SearchHeader = ({ value, onChange, onSearch }) => {
             <div className="flex flex-col gap-1">
                 <span className="text-xl font-semibold text-gray-800">Instruction Discriminator</span>
                 <span className="text-sm text-gray-500">
-                    Get the byte array of the discriminator for an Instruction Name.
+                    Get the byte array of the discriminator for an Instruction Name
                 </span>
             </div>
             <div className="flex items-center space-x-2">
