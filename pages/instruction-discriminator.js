@@ -7,8 +7,8 @@ const SearchHeader = ({ value, onChange, onSearch }) => {
             <div className="flex flex-col gap-1">
                 <span className="text-xl font-semibold text-gray-800">Instruction Discriminator</span>
                 <span className="text-sm text-gray-500">
-          Get bytes array of discriminator for a Instruction Name
-        </span>
+                    Get bytes array of discriminator for a Instruction Name
+                </span>
             </div>
             <div className="flex items-center space-x-2">
                 <div className="flex items-center bg-white border border-gray-300 rounded px-3 py-2">
@@ -29,7 +29,7 @@ const SearchHeader = ({ value, onChange, onSearch }) => {
                         className="ml-2 outline-none text-gray-700 placeholder-gray-400 w-full"
                         value={value}
                         onChange={(e) => onChange(e.target.value)}
-                        placeholder="Base58 encoded instruction"
+                        placeholder="b58/hex encoded ix"
                     />
                 </div>
                 <button

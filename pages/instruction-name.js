@@ -7,8 +7,8 @@ const SearchHeader = ({ value, onChange, onSearch }) => {
             <div className="flex flex-col gap-1">
                 <span className="text-xl font-semibold text-gray-800">Instruction Name</span>
                 <span className="text-sm text-gray-500">
-          Get human readable name of Instruction from a base58 encoded instruction string
-        </span>
+                    Get human readable name of Instruction from a base58 encoded instruction string
+                </span>
             </div>
             <div className="flex items-center space-x-2">
                 <div className="flex items-center bg-white border border-gray-300 rounded px-3 py-2">
@@ -29,7 +29,7 @@ const SearchHeader = ({ value, onChange, onSearch }) => {
                         className="ml-2 outline-none text-gray-700 placeholder-gray-400 w-full"
                         value={value}
                         onChange={(e) => onChange(e.target.value)}
-                        placeholder="Base58 encoded instruction"
+                        placeholder="b58/hex encoded ix"
                     />
                 </div>
                 <button
@@ -55,18 +55,32 @@ function InstructionName() {
         setError(null);
         setResult(null);
         try {
+            // Temporary test case - will be removed after testing
+            if (instruction === "test") {
+                setResult({
+                    name: "increasePositionPreSwap",
+                    program_addresses: [
+                        "PERPHjGBqRHArX4DySjwM6UJHiR3sWAatqfdBS2qQJu",
+                        "PERPHjGBqRHArX4DySjwM6UJHiR3sWAatqfdBS2qQJv",
+                        "PERPHjGBqRHArX4DySjwM6UJHiR3sWAatqfdBS2qQJw"
+                    ]
+                });
+                setLoading(false);
+                return;
+            }
+
             const res = await fetch("https://apis.topledger.xyz/api/instruction", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ base58_ix_data: instruction }),
             });
-            if (!res.ok) {
-                throw new Error("Network response was not ok");
-            }
             const data = await res.json();
+            if (!res.ok) {
+                throw new Error(data.error || "Network response was not ok");
+            }
             setResult(data);
         } catch (err) {
-            setError("Error loading data");
+            setError(err.message || "Error loading data");
         }
         setLoading(false);
     };
@@ -85,15 +99,26 @@ function InstructionName() {
                     </div>
                 )}
                 {error && (
-                    <div className="w-full min-h-80 flex items-center justify-center">
+                    <div className="w-full min-h-80 flex items-center justify-center text-red-500">
                         {error}
                     </div>
                 )}
-                {result && result.ix_name && (
+                {result && result.name && (
                     <div className="border border-blue-300 rounded p-4">
-                        <p className="text-gray-800 text-lg font-semibold">
-                            Instruction Name: {result.ix_name}
-                        </p>
+                        <div className="flex flex-col gap-2">
+                            <div className="flex items-center gap-2">
+                                <span className="text-gray-800 font-semibold text-lg">Program Address:</span>
+                                <div className="flex flex-col gap-1">
+                                    {result.program_addresses?.map((address, index) => (
+                                        <span key={index} className="text-gray-700 text-sm">{address}</span>
+                                    ))}
+                                </div>
+                            </div>
+                            <div className="flex items-center gap-2">
+                                <span className="text-gray-800 font-semibold text-lg">Instruction Name:</span>
+                                <span className="text-gray-700 text-lg">{result.name}</span>
+                            </div>
+                        </div>
                     </div>
                 )}
             </div>
