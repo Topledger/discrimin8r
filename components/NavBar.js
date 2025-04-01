@@ -1,28 +1,41 @@
-"use client";
-
-import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { twMerge } from "tailwind-merge";
+import { useState, useEffect } from "react";
 
-const getWindow = () => (typeof window === "undefined" ? {} : window);
+const getWindow = () => {
+    if (typeof window !== "undefined") {
+        return window;
+    }
+    return {};
+};
 
 const Navbar = () => {
-    const [selectedUpload, setSelectedUpload] = useState();
-    const [selectedPrograms, setSelectedPrograms] = useState();
+    const [selectedTab, setSelectedTab] = useState("");
 
     useEffect(() => {
-        setSelectedUpload(getWindow().location?.href?.endsWith("/"));
-        setSelectedPrograms(getWindow().location?.href?.endsWith("/programs"));
+        // Get the current path and set the selected tab
+        const path = getWindow().location?.pathname || "";
+        if (path === "/") {
+            setSelectedTab("upload");
+        } else if (path === "/instruction-name") {
+            setSelectedTab("instruction-name");
+        } else if (path === "/instruction-discriminator") {
+            setSelectedTab("instruction-discriminator");
+        } else if (path === "/verify-idl") {
+            setSelectedTab("verify-idl");
+        } else if (path === "/programs") {
+            setSelectedTab("programs");
+        }
     }, []);
 
-    const class1 = twMerge(
-        "py-4 px-2 font-semibold",
-        selectedUpload ? "text-[#3455FF]" : ""
-    );
-    const class2 = twMerge(
-        "py-4 px-2 font-semibold",
-        selectedPrograms ? "text-[#3455FF]" : ""
-    );
+    const getTabClass = (tabName) => {
+        return twMerge(
+            "py-4 px-2 font-semibold transition-colors duration-200",
+            selectedTab === tabName
+                ? "text-[#3455FF]"
+                : "text-gray-600 hover:text-[#3455FF]"
+        );
+    };
 
     return (
         <nav className="border-b border-[#C3CFFF]">
@@ -49,19 +62,19 @@ const Navbar = () => {
                     </div>
                     {/* Primary Navbar items */}
                     <div className="hidden md:flex items-center space-x-3">
-                        <Link href="/" className={class1}>
+                        <Link href="/" className={getTabClass("upload")}>
                             Upload
                         </Link>
-                        <Link href="/instruction-name" className={class1}>
+                        <Link href="/instruction-name" className={getTabClass("instruction-name")}>
                             Instruction Name
                         </Link>
-                        <Link href="/instruction-discriminator" className={class1}>
+                        <Link href="/instruction-discriminator" className={getTabClass("instruction-discriminator")}>
                             Instruction Discriminator
                         </Link>
-                        <Link href="/verify-idl" className={class1}>
+                        <Link href="/verify-idl" className={getTabClass("verify-idl")}>
                             Verify IDL
                         </Link>
-                        <Link href="/programs" className={class2}>
+                        <Link href="/programs" className={getTabClass("programs")}>
                             Search Programs
                         </Link>
                     </div>
