@@ -1,6 +1,6 @@
 import { useState } from "react";
 import Modal from "../components/modal";
-import {} from "react-code-blocks/dist";
+import { } from "react-code-blocks/dist";
 import Page from "../components/Page";
 import CodeBlock from "../components/CodeBlock";
 
@@ -64,9 +64,7 @@ const UploadForm = ({ onChange, isLoading }) => {
     return (
         <form className="flex flex-col items-center border border-[#CCD8FF] p-10 py-20 w-full bg-[#F6F8FF] rounded-lg gap-4">
             <div className="grow text-[#657082] text-center">
-                Search for you favourite dApps, get verified discriminators,
-                <br />
-                input account mappings, fully functional parsers
+                Upload the Anchor IDL to get fully functional python parsers.
             </div>
             <UploadButton onChange={onChange} isLoading={isLoading} />
         </form>
@@ -113,42 +111,7 @@ export default function Home(props) {
                         isLoading={dappDetailsInProgress}
                     />
 
-                    {!!dappDetails &&
-                        !!dappDetails.instruction_discriminators && (
-                            <>
-                                <CodeBlock
-                                    title="Instruction Discriminators"
-                                    text={dappDetails.instruction_discriminators.join(
-                                        "\n"
-                                    )}
-                                    verified={verified}
-                                />
-                            </>
-                        )}
 
-                    {!!dappDetails && !!dappDetails.event_discriminators && (
-                        <>
-                            <CodeBlock
-                                title="Event Discriminators"
-                                text={dappDetails.event_discriminators.join(
-                                    "\n"
-                                )}
-                                verified={verified}
-                            />
-                        </>
-                    )}
-
-                    {!!dappDetails && !!dappDetails.input_account_mappings && (
-                        <>
-                            <CodeBlock
-                                title="Input Account Mappings"
-                                text={dappDetails.input_account_mappings.join(
-                                    "\n"
-                                )}
-                                verified={verified}
-                            />
-                        </>
-                    )}
 
                     {!!dappDetails && !!dappDetails.python_parser && (
                         <>

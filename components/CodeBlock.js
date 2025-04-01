@@ -66,7 +66,7 @@ const CodeBlock = ({ title, text, verified }) => {
                 wrapLongLines={false}
                 className="bg-[#F6F8FF] overflow-auto"
                 customStyle={{
-                    height: "16.1rem",
+                    height: "30rem",
                     width: "w-full",
                     background: "#F6F8FF",
                     overflow: "auto",

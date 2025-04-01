@@ -2,13 +2,13 @@ import React, { useState } from "react";
 import Page from "../components/Page";
 
 const VerifyForm = ({
-                        dappAddress,
-                        setDappAddress,
-                        blockSlot,
-                        setBlockSlot,
-                        onFileChange,
-                        onVerify,
-                    }) => {
+    dappAddress,
+    setDappAddress,
+    blockSlot,
+    setBlockSlot,
+    onFileChange,
+    onVerify,
+}) => {
     return (
         <div className="flex flex-col space-y-4 bg-white p-6 rounded shadow">
             <div>
@@ -19,6 +19,11 @@ const VerifyForm = ({
                     type="text"
                     value={dappAddress}
                     onChange={(e) => setDappAddress(e.target.value)}
+                    onKeyDown={(e) => {
+                        if (e.key === 'Enter') {
+                            onVerify();
+                        }
+                    }}
                     className="mt-1 block w-full border border-gray-300 rounded-md p-2 text-gray-800"
                     placeholder="Enter dapp address"
                 />
@@ -31,6 +36,11 @@ const VerifyForm = ({
                     type="number"
                     value={blockSlot}
                     onChange={(e) => setBlockSlot(e.target.value)}
+                    onKeyDown={(e) => {
+                        if (e.key === 'Enter') {
+                            onVerify();
+                        }
+                    }}
                     className="mt-1 block w-full border border-gray-300 rounded-md p-2 text-gray-800"
                     placeholder="Enter block slot"
                 />
@@ -116,7 +126,7 @@ function VerifyIDL() {
                 <div className="mb-6">
                     <h1 className="text-2xl font-bold text-gray-800">Verify IDL</h1>
                     <p className="text-gray-600">
-                        Validate any IDL file for a given dapp address and block slot number.
+                        Validate an Anchor-based IDL file for a given dApp address and block slot.
                     </p>
                 </div>
                 <VerifyForm
@@ -145,8 +155,8 @@ function VerifyIDL() {
                                     ✅ Verification Successful
                                 </p>
                                 <pre className="mt-2 text-sm text-gray-700 overflow-auto">
-                  {JSON.stringify(result.data, null, 2)}
-                </pre>
+                                    {JSON.stringify(result.data, null, 2)}
+                                </pre>
                             </div>
                         ) : (
                             <div>
