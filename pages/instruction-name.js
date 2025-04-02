@@ -3,17 +3,11 @@ import Page from "../components/Page";
 
 const SearchHeader = ({ value, onChange, onSearch }) => {
     return (
-        <div className="flex justify-between items-center border-b border-blue-200 py-4 min-h-20">
-            <div className="flex flex-col gap-1">
-                <span className="text-xl font-semibold text-gray-800">Instruction Name</span>
-                <span className="text-sm text-gray-500">
-                    Get the instruction name from a base58 string or hex data for Anchor-based programs
-                </span>
-            </div>
-            <div className="flex items-center space-x-2">
-                <div className="flex items-center bg-white border border-gray-300 rounded px-3 py-2">
+        <div className="flex flex-col items-center gap-10 w-full max-w-2xl">
+            <div className="flex items-center space-x-3 w-full">
+                <div className="flex items-center bg-white border border-[#CCD8FF] rounded px-4 py-3 flex-1 focus-within:border-[#576EB7] focus-within:ring-1 focus-within:ring-[#576EB7] transition-all duration-200 shadow-sm">
                     <svg
-                        className="h-4 w-4 text-gray-500"
+                        className="h-5 w-5 text-[#657082]"
                         fill="none"
                         viewBox="0 0 24 24"
                         stroke="currentColor"
@@ -26,7 +20,7 @@ const SearchHeader = ({ value, onChange, onSearch }) => {
                         />
                     </svg>
                     <input
-                        className="ml-2 outline-none text-gray-700 placeholder-gray-400 w-full"
+                        className="ml-3 outline-none text-[#657082] placeholder-[#657082] w-full text-lg"
                         value={value}
                         onChange={(e) => onChange(e.target.value)}
                         onKeyDown={(e) => {
@@ -34,12 +28,14 @@ const SearchHeader = ({ value, onChange, onSearch }) => {
                                 onSearch();
                             }
                         }}
-                        placeholder="b58/hex encoded ix"
+                        placeholder="Enter base58 string or hex data"
+                        aria-label="Instruction data input"
                     />
                 </div>
                 <button
                     onClick={onSearch}
-                    className="px-4 py-2 bg-accent hover:bg-blue-700 text-white rounded"
+                    className="px-6 py-3 bg-[#EAEFFF] text-[#576EB7] border border-[#CCD8FF] rounded hover:bg-[#DCE3FF] transition-colors duration-200 whitespace-nowrap font-medium text-lg shadow-sm disabled:opacity-50 disabled:cursor-not-allowed"
+                    disabled={!value.trim()}
                 >
                     Search
                 </button>
@@ -61,20 +57,6 @@ function InstructionName() {
         setError(null);
         setResult(null);
         try {
-            // Temporary test case - will be removed after testing
-            if (instruction === "test") {
-                setResult({
-                    name: "increasePositionPreSwap",
-                    program_addresses: [
-                        "PERPHjGBqRHArX4DySjwM6UJHiR3sWAatqfdBS2qQJu",
-                        "PERPHjGBqRHArX4DySjwM6UJHiR3sWAatqfdBS2qQJv",
-                        "PERPHjGBqRHArX4DySjwM6UJHiR3sWAatqfdBS2qQJw"
-                    ]
-                });
-                setLoading(false);
-                return;
-            }
-
             const res = await fetch("https://apis.topledger.xyz/api/instruction", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
@@ -98,93 +80,145 @@ function InstructionName() {
     };
 
     return (
-        <Page>
-            <div className="px-32 mt-8 flex flex-col gap-8">
+        <Page title="Instruction Name" subtitle="Get the instruction name from a base58 string or hex data for Anchor-based programs">
+            <div className="flex flex-col items-center gap-10 w-full mt-12">
                 <SearchHeader
                     value={instruction}
                     onChange={setInstruction}
                     onSearch={handleSearch}
                 />
                 {loading && (
-                    <div className="w-full min-h-80 flex items-center justify-center">
-                        Loading...
+                    <div className="w-full flex items-center justify-center p-10">
+                        <svg
+                            className="h-8 w-8 text-[#888] animate-[spin_2s_linear_infinite]"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                        >
+                            <line x1="12" y1="2" x2="12" y2="6" />
+                            <line x1="12" y1="18" x2="12" y2="22" />
+                            <line x1="4.93" y1="4.93" x2="7.76" y2="7.76" />
+                            <line x1="16.24" y1="16.24" x2="19.07" y2="19.07" />
+                            <line x1="2" y1="12" x2="6" y2="12" />
+                            <line x1="18" y1="12" x2="22" y2="12" />
+                            <line x1="4.93" y1="19.07" x2="7.76" y2="16.24" />
+                            <line x1="16.24" y1="7.76" x2="19.07" y2="4.93" />
+                        </svg>
                     </div>
                 )}
                 {error && (
-                    <div className="w-full min-h-80 flex items-center justify-center text-red-500">
-                        {error}
+                    <div className="w-full flex items-center justify-center p-10">
+                        <div className="flex items-center gap-3 text-red-500 bg-red-50 px-6 py-4 rounded-lg">
+                            <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                            <span className="text-lg">{error}</span>
+                        </div>
                     </div>
                 )}
                 {result && result.name && (
-                    <div className="border border-blue-300 rounded p-4">
-                        <div className="flex flex-col gap-2">
-                            <div className="flex items-center gap-2">
-                                <span className="text-gray-800 font-semibold text-lg">Program Address:</span>
-                                <div className="flex flex-col gap-1">
+                    <div className="w-full max-w-2xl border border-[#CCD8FF] rounded-lg p-8 bg-[#F6F8FF] shadow-sm">
+                        <div className="flex flex-col gap-8">
+                            <div className="flex flex-col gap-2">
+                                <span className="text-[#657082] font-medium text-sm">Program Address</span>
+                                <div className="flex flex-col gap-3">
                                     {result.program_addresses?.map((address, index) => (
-                                        <div key={index} className="flex items-center gap-2">
-                                            <span className="text-gray-700 text-sm">
+                                        <div key={index} className="flex items-center gap-2 bg-white border border-[#CCD8FF] px-4 py-3 rounded shadow-sm">
+                                            <span className="text-[#657082] text-sm font-medium flex-1 tracking-wide">
                                                 {address}
                                             </span>
-                                            <div className="flex items-center gap-1">
+                                            <div className="flex items-center gap-2">
                                                 <button
                                                     onClick={() => handleCopy(address)}
-                                                    className="p-1.5 hover:bg-gray-100 rounded transition-colors"
+                                                    className="p-2 hover:bg-[#EAEFFF] rounded transition-colors"
                                                     title="Copy to clipboard"
+                                                    aria-label="Copy program address"
                                                 >
-                                                    <svg
-                                                        xmlns="http://www.w3.org/2000/svg"
-                                                        width="16"
-                                                        height="16"
-                                                        viewBox="0 0 24 24"
-                                                        fill="none"
-                                                        stroke="currentColor"
-                                                        className="text-gray-500"
-                                                    >
-                                                        <rect x="8" y="8" width="12" height="12" rx="2" ry="2" />
-                                                        <path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2" />
-                                                    </svg>
+                                                    {copiedText === address ? (
+                                                        <svg
+                                                            xmlns="http://www.w3.org/2000/svg"
+                                                            width="18"
+                                                            height="18"
+                                                            viewBox="0 0 24 24"
+                                                            fill="none"
+                                                            stroke="#22C55E"
+                                                            className="text-[#22C55E]"
+                                                        >
+                                                            <path
+                                                                strokeLinecap="round"
+                                                                strokeLinejoin="round"
+                                                                strokeWidth="2"
+                                                                d="M5 13l4 4L19 7"
+                                                            />
+                                                        </svg>
+                                                    ) : (
+                                                        <svg
+                                                            xmlns="http://www.w3.org/2000/svg"
+                                                            width="18"
+                                                            height="18"
+                                                            viewBox="0 0 24 24"
+                                                            fill="none"
+                                                            stroke="currentColor"
+                                                            className="text-[#657082]"
+                                                        >
+                                                            <rect x="8" y="8" width="12" height="12" rx="2" ry="2" />
+                                                            <path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2" />
+                                                        </svg>
+                                                    )}
                                                 </button>
-                                                {copiedText === address && (
-                                                    <span style={{ color: "green" }} className="text-sm transition-opacity duration-200">
-                                                        Copied!
-                                                    </span>
-                                                )}
                                             </div>
                                         </div>
                                     ))}
                                 </div>
                             </div>
-                            <div className="flex items-center gap-2">
-                                <span className="text-gray-800 font-semibold text-lg">Instruction Name:</span>
-                                <div className="flex items-center gap-2">
-                                    <span className="text-gray-700 text-lg">
+                            <div className="flex flex-col gap-2">
+                                <span className="text-[#657082] font-medium text-sm">Instruction Name</span>
+                                <div className="flex items-center gap-2 bg-white border border-[#CCD8FF] px-4 py-3 rounded shadow-sm">
+                                    <span className="text-[#657082] text-sm font-medium flex-1 tracking-wide">
                                         {result.name}
                                     </span>
-                                    <div className="flex items-center gap-1">
+                                    <div className="flex items-center gap-2">
                                         <button
                                             onClick={() => handleCopy(result.name)}
-                                            className="p-1.5 hover:bg-gray-100 rounded transition-colors"
+                                            className="p-2 hover:bg-[#EAEFFF] rounded transition-colors"
                                             title="Copy to clipboard"
+                                            aria-label="Copy instruction name"
                                         >
-                                            <svg
-                                                xmlns="http://www.w3.org/2000/svg"
-                                                width="16"
-                                                height="16"
-                                                viewBox="0 0 24 24"
-                                                fill="none"
-                                                stroke="currentColor"
-                                                className="text-gray-500"
-                                            >
-                                                <rect x="8" y="8" width="12" height="12" rx="2" ry="2" />
-                                                <path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2" />
-                                            </svg>
+                                            {copiedText === result.name ? (
+                                                <svg
+                                                    xmlns="http://www.w3.org/2000/svg"
+                                                    width="18"
+                                                    height="18"
+                                                    viewBox="0 0 24 24"
+                                                    fill="none"
+                                                    stroke="#22C55E"
+                                                    className="text-[#22C55E]"
+                                                >
+                                                    <path
+                                                        strokeLinecap="round"
+                                                        strokeLinejoin="round"
+                                                        strokeWidth="2"
+                                                        d="M5 13l4 4L19 7"
+                                                    />
+                                                </svg>
+                                            ) : (
+                                                <svg
+                                                    xmlns="http://www.w3.org/2000/svg"
+                                                    width="18"
+                                                    height="18"
+                                                    viewBox="0 0 24 24"
+                                                    fill="none"
+                                                    stroke="currentColor"
+                                                    className="text-[#657082]"
+                                                >
+                                                    <rect x="8" y="8" width="12" height="12" rx="2" ry="2" />
+                                                    <path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2" />
+                                                </svg>
+                                            )}
                                         </button>
-                                        {copiedText === result.name && (
-                                            <span style={{ color: "green" }} className="text-sm transition-opacity duration-200">
-                                                Copied!
-                                            </span>
-                                        )}
                                     </div>
                                 </div>
                             </div>
