@@ -18,31 +18,32 @@ const CodeBlock = ({ title, text, verified }) => {
     }, [copy, text]);
 
     const footerClass = twMerge(
-        "w-full text-center border rounded-b text-[14px] px-2 h-[49px] flex items-center justify-center border-[#ddd]",
-        verified ? "bg-[#D7FFEC] text-[#62B890] border-[#A8F1CF]" : "bg-lbt"
+        "w-full text-center text-[13px] px-4 h-[40px] flex items-center justify-center border rounded-b",
+        verified ? "bg-[#ECFDF5] text-[#059669] border-[#A7F3D0]" : "bg-[#F9FAFB] text-[#657082] border-[#E5E7EB]"
     );
+
     return (
-        <div className={twMerge("w-full", styles.codeBlock)}>
-            <div className="bg-[#d6e7ff] text-[14px] px-2 border border-[#CCD8FF] rounded-tl rounded-tr w-full text-[#576EB7] font-semibold h-[49px] flex items-center justify-between">
+        <div className={twMerge("w-full rounded overflow-hidden shadow-sm", styles.codeBlock)}>
+            <div className="bg-[#F9FAFB] text-[13px] px-4 border border-[#E5E7EB] w-full text-[#576EB7] font-medium h-[40px] flex items-center justify-between">
                 {title}
                 {text && (
                     <button
                         onClick={handleCopy}
                         disabled={copied}
                         className={twMerge(
-                            "font-normal inline-flex items-center gap-1",
-                            text ? "text-[#576EB7]" : "text-[#aaaaaa]"
+                            "font-normal inline-flex items-center gap-2 text-[#657082] hover:text-[#576EB7] transition-colors",
+                            text ? "text-[#657082]" : "text-[#aaaaaa]"
                         )}
                     >
                         {!copied && (
                             <svg
-                                class="h-2.5"
+                                className="h-4 w-4"
                                 viewBox="0 0 24 24"
                                 fill="none"
                                 stroke="currentColor"
-                                stroke-width="2"
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
+                                strokeWidth="2"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
                             >
                                 <rect
                                     x="9"
@@ -64,12 +65,67 @@ const CodeBlock = ({ title, text, verified }) => {
                 language="python"
                 showLineNumbers={true}
                 wrapLongLines={false}
-                className="bg-[#F6F8FF] overflow-auto"
+                className="bg-white overflow-auto"
                 customStyle={{
                     height: "30rem",
                     width: "w-full",
-                    background: "#F6F8FF",
+                    background: "#FFFFFF",
                     overflow: "auto",
+                    fontSize: "13px",
+                    fontFamily: "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace",
+                    lineHeight: "1.6",
+                    padding: "1rem 1.5rem",
+                    tabSize: "4",
+                }}
+                theme={{
+                    lineNumberColor: "#9CA3AF",
+                    lineNumberBgColor: "#F9FAFB",
+                    backgroundColor: "#FFFFFF",
+                    textColor: "#1F2937",
+                    substringColor: "#1F2937",
+                    // Keywords and control structures
+                    keywordColor: "#7C3AED", // Purple for keywords
+                    builtInColor: "#7C3AED", // Purple for built-in functions
+                    functionColor: "#2563EB", // Blue for function names
+                    // Strings and literals
+                    stringColor: "#059669", // Green for strings
+                    literalColor: "#DC2626", // Red for literals
+                    numberColor: "#DC2626", // Red for numbers
+                    // Classes and types
+                    classColor: "#2563EB", // Blue for class names
+                    typeColor: "#2563EB", // Blue for type annotations
+                    // Variables and parameters
+                    variableColor: "#1F2937", // Dark gray for variables
+                    parameterColor: "#1F2937", // Dark gray for parameters
+                    // Decorators and attributes
+                    decoratorColor: "#7C3AED", // Purple for decorators
+                    attributeColor: "#059669",
+                    // Comments and docstrings
+                    commentColor: "#6B7280", // Gray for comments
+                    docTagColor: "#059669", // Green for docstring tags
+                    // Operators and symbols
+                    operatorColor: "#1F2937", // Dark gray for operators
+                    symbolColor: "#1F2937", // Dark gray for symbols
+                    // Special elements
+                    selectorTagColor: "#DC2626", // Red for HTML-like tags
+                    selectorIdColor: "#2563EB", // Blue for IDs
+                    selectorClassColor: "#059669", // Green for classes
+                    // Additional elements
+                    bulletColor: "#1F2937",
+                    codeColor: "#1F2937",
+                    additionColor: "#059669",
+                    regexpColor: "#DC2626",
+                    templateVariableColor: "#1F2937",
+                    linkColor: "#1F2937",
+                    selectorAttributeColor: "#1F2937",
+                    selectorPseudoColor: "#1F2937",
+                    quoteColor: "#1F2937",
+                    templateTagColor: "#1F2937",
+                    deletionColor: "#DC2626",
+                    titleColor: "#1F2937",
+                    sectionColor: "#1F2937",
+                    metaKeywordColor: "#1F2937",
+                    metaColor: "#1F2937",
                 }}
             />
             <div className={footerClass}>

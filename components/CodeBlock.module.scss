@@ -3,5 +3,49 @@
         button[aria-label="Copy Code"] {
             display: none;
         }
+
+        pre {
+            background: #FFFFFF !important;
+        }
+
+        code {
+            background: #FFFFFF !important;
+        }
+
+        .token {
+            position: relative;
+        }
+
+        .token::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: -0.5rem;
+            height: 1px;
+            background: #F3F4F6;
+        }
+
+        .token:last-child::after {
+            display: none;
+        }
+
+        .token-line {
+            position: relative;
+        }
+
+        .token-line::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: -0.5rem;
+            height: 1px;
+            background: #F3F4F6;
+        }
+
+        .token-line:last-child::after {
+            display: none;
+        }
     }
 }

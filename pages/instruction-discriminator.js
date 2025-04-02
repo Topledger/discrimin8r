@@ -28,7 +28,7 @@ const SearchHeader = ({ value, onChange, onSearch }) => {
                                 onSearch();
                             }
                         }}
-                        placeholder="Enter instruction name"
+                        placeholder="Enter base58 encoded string or hex data"
                         aria-label="Instruction name input"
                     />
                 </div>
@@ -80,7 +80,7 @@ function InstructionDiscriminator() {
     };
 
     return (
-        <Page title="Instruction Discriminator" subtitle="Get the byte array of the discriminator for an Instruction Name">
+        <Page title="Instruction Discriminator" subtitle="Get the byte array of the discriminator for an Instruction">
             <div className="flex flex-col items-center gap-10 w-full mt-12">
                 <SearchHeader
                     value={instruction}
