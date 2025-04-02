@@ -28,7 +28,7 @@ const SearchHeader = ({ value, onChange, onSearch }) => {
                                 onSearch();
                             }
                         }}
-                        placeholder="Enter base58 string or hex data"
+                        placeholder="Enter base58 encoded string or hex data"
                         aria-label="Instruction data input"
                     />
                 </div>
@@ -80,7 +80,7 @@ function InstructionName() {
     };
 
     return (
-        <Page title="Instruction Name" subtitle="Get the instruction name from a base58 string or hex data for Anchor-based programs">
+        <Page title="Instruction Name" subtitle="Get the instruction name from a base58 encoded string or hex data for Anchor-based programs">
             <div className="flex flex-col items-center gap-10 w-full mt-12">
                 <SearchHeader
                     value={instruction}

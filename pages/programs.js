@@ -729,21 +729,21 @@ function Programs() {
             subtitle={selectedProgram ? "Program details" : "Search for program details"}
             searchValue={searchText}
             onSearchChange={setSearchText}
-            showSearch={true}
+            showSearch={!selectedProgram}
             breadcrumb={selectedProgram?.displayName}
             onBreadcrumbClick={() => setSelectedProgram(null)}
         >
             <div className="flex flex-col items-center gap-10 w-full mt-8">
                 {dappDetailsLoading && (
-                    <div className="w-full flex items-center justify-center p-10">
+                    <div className="w-full min-h-80 flex items-center justify-center">
                         <svg
-                            className="h-8 w-8 text-[#888] animate-[spin_2s_linear_infinite]"
+                            className="h-7 w-7 text-[#aaa] animate-[spin_3s_linear_infinite]"
                             viewBox="0 0 24 24"
                             fill="none"
                             stroke="currentColor"
-                            strokeWidth="2"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
                         >
                             <line x1="12" y1="2" x2="12" y2="6" />
                             <line x1="12" y1="18" x2="12" y2="22" />
@@ -756,7 +756,7 @@ function Programs() {
                         </svg>
                     </div>
                 )}
-                {!selectedProgram && (
+                {!selectedProgram && !dappDetailsLoading && (
                     <ul className="list-none flex flex-col gap-4 w-full">
                         {PROGRAM_LIST.filter(search).map((program) => (
                             <li
@@ -776,11 +776,9 @@ function Programs() {
                         ))}
                     </ul>
                 )}
-                {selectedProgram &&
+                {selectedProgram && !dappDetailsLoading && (
                     <>
-                        {selectedProgram &&
-                            !dappDetailsLoading &&
-                            !dappDetails?.instruction_discriminators &&
+                        {!dappDetails?.instruction_discriminators &&
                             !dappDetails?.event_discriminators &&
                             !dappDetails?.input_account_mappings &&
                             !dappDetails?.python_parser && (
@@ -788,98 +786,39 @@ function Programs() {
                                     No Data found for selected program
                                 </div>
                             )}
-                        {dappDetailsLoading && (
-                            <div className="w-full min-h-80 flex items-center justify-center">
-                                <svg
-                                    className="h-7 w-7 text-[#aaa] animate-[spin_3s_linear_infinite]"
-                                    viewBox="0 0 24 24"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    stroke-width="2"
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                >
-                                    <line x1="12" y1="2" x2="12" y2="6" />
-                                    <line x1="12" y1="18" x2="12" y2="22" />
-                                    <line
-                                        x1="4.93"
-                                        y1="4.93"
-                                        x2="7.76"
-                                        y2="7.76"
-                                    />
-                                    <line
-                                        x1="16.24"
-                                        y1="16.24"
-                                        x2="19.07"
-                                        y2="19.07"
-                                    />
-                                    <line x1="2" y1="12" x2="6" y2="12" />
-                                    <line x1="18" y1="12" x2="22" y2="12" />
-                                    <line
-                                        x1="4.93"
-                                        y1="19.07"
-                                        x2="7.76"
-                                        y2="16.24"
-                                    />
-                                    <line
-                                        x1="16.24"
-                                        y1="7.76"
-                                        x2="19.07"
-                                        y2="4.93"
-                                    />
-                                </svg>
-                            </div>
+                        {!!dappDetails && !!dappDetails.instruction_discriminators && (
+                            <CodeBlock
+                                title="Instruction Discriminators"
+                                text={dappDetails.instruction_discriminators.join("\n")}
+                                verified={true}
+                            />
                         )}
-                        {!!dappDetails &&
-                            !!dappDetails.instruction_discriminators && (
-                                <>
-                                    <CodeBlock
-                                        title="Instruction Discriminators"
-                                        text={dappDetails.instruction_discriminators.join(
-                                            "\n"
-                                        )}
-                                        verified={true}
-                                    />
-                                </>
-                            )}
 
-                        {!!dappDetails &&
-                            !!dappDetails.event_discriminators && (
-                                <>
-                                    <CodeBlock
-                                        title="Event Discriminators"
-                                        text={dappDetails.event_discriminators.join(
-                                            "\n"
-                                        )}
-                                        verified={true}
-                                    />
-                                </>
-                            )}
+                        {!!dappDetails && !!dappDetails.event_discriminators && (
+                            <CodeBlock
+                                title="Event Discriminators"
+                                text={dappDetails.event_discriminators.join("\n")}
+                                verified={true}
+                            />
+                        )}
 
-                        {!!dappDetails &&
-                            !!dappDetails.input_account_mappings && (
-                                <>
-                                    <CodeBlock
-                                        title="Input Account Mappings"
-                                        text={dappDetails.input_account_mappings.join(
-                                            "\n"
-                                        )}
-                                        verified={true}
-                                    />
-                                </>
-                            )}
+                        {!!dappDetails && !!dappDetails.input_account_mappings && (
+                            <CodeBlock
+                                title="Input Account Mappings"
+                                text={dappDetails.input_account_mappings.join("\n")}
+                                verified={true}
+                            />
+                        )}
 
                         {!!dappDetails && !!dappDetails.python_parser && (
-                            <>
-                                <CodeBlock
-                                    title="Python Parser"
-                                    text={dappDetails.python_parser}
-                                    verified={true}
-                                />
-                            </>
+                            <CodeBlock
+                                title="Python Parser"
+                                text={dappDetails.python_parser}
+                                verified={true}
+                            />
                         )}
                     </>
-                }
+                )}
             </div>
         </Page>
     );
