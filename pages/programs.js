@@ -698,75 +698,6 @@ const PROGRAM_LIST = [
     },
 ];
 
-const SearchInput = ({ placeholder, onChange, value }) => (
-    <span className="inline-flex h-[40px] p-2.5 bg-white items-center gap-1 rounded">
-        <svg
-            class="h-4 w-4"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-        >
-            <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-            />
-        </svg>
-
-        <input
-            className="h-6 outline-transparent min-w-56"
-            value={value}
-            onChange={(e) => onChange(e.target.value)}
-            placeholder={placeholder}
-        />
-    </span>
-);
-
-const SearchHeader = ({ selectedProgram, onChange, value, onReset }) => {
-    return (
-        <div className="flex justify-between border-b border-[#C3CFFF] py-4 min-h-20">
-            <div
-                className={twMerge(
-                    "flex flex-col gap-1 text-[18px] text-[#374151]",
-                    selectedProgram ? "font-bold" : ""
-                )}
-            >
-                <span>
-                    <span
-                        onClick={onReset}
-                        className={selectedProgram ? "cursor-pointer" : ""}
-                    >
-                        Solana programs
-                    </span>
-                    {selectedProgram ? (
-                        <>
-                            {" / "}
-                            <span className="font-normal">
-                                {selectedProgram.displayName}
-                            </span>
-                        </>
-                    ) : (
-                        ""
-                    )}
-                </span>
-                {!selectedProgram && (
-                    <span className="text-[12px] text-[#4F5A6C]">
-                        Search for your favourite dApps
-                    </span>
-                )}
-            </div>
-            {!selectedProgram && (
-                <SearchInput
-                    value={value}
-                    placeholder="Search by name or address"
-                    onChange={onChange}
-                />
-            )}
-        </div>
-    );
-};
-
 function Programs() {
     const [selectedProgram, setSelectedProgram] = useState();
     const [searchText, setSearchText] = useState("");
@@ -787,32 +718,57 @@ function Programs() {
         if (!searchText || searchText?.length < 2) return true;
 
         return (
-            program.displayName.toLowerCase().includes(searchText) ||
-            program.address.toLowerCase().includes(searchText)
+            program.displayName.toLowerCase().includes(searchText.toLowerCase()) ||
+            program.address.toLowerCase().includes(searchText.toLowerCase())
         );
     };
 
     return (
-        <Page>
-            <div className="px-32 mt-8 flex flex-col gap-8">
-                <SearchHeader
-                    selectedProgram={selectedProgram}
-                    onChange={setSearchText}
-                    onReset={() => setSelectedProgram(null)}
-                    value={searchText}
-                />
+        <Page
+            title="Programs"
+            subtitle={selectedProgram ? "Program details" : "Search for program details"}
+            searchValue={searchText}
+            onSearchChange={setSearchText}
+            showSearch={true}
+            breadcrumb={selectedProgram?.displayName}
+            onBreadcrumbClick={() => setSelectedProgram(null)}
+        >
+            <div className="flex flex-col items-center gap-10 w-full mt-8">
+                {dappDetailsLoading && (
+                    <div className="w-full flex items-center justify-center p-10">
+                        <svg
+                            className="h-8 w-8 text-[#888] animate-[spin_2s_linear_infinite]"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                        >
+                            <line x1="12" y1="2" x2="12" y2="6" />
+                            <line x1="12" y1="18" x2="12" y2="22" />
+                            <line x1="4.93" y1="4.93" x2="7.76" y2="7.76" />
+                            <line x1="16.24" y1="16.24" x2="19.07" y2="19.07" />
+                            <line x1="2" y1="12" x2="6" y2="12" />
+                            <line x1="18" y1="12" x2="22" y2="12" />
+                            <line x1="4.93" y1="19.07" x2="7.76" y2="16.24" />
+                            <line x1="16.24" y1="7.76" x2="19.07" y2="4.93" />
+                        </svg>
+                    </div>
+                )}
                 {!selectedProgram && (
-                    <ul className="list-none mt-5 flex flex-col gap-4">
+                    <ul className="list-none flex flex-col gap-4 w-full">
                         {PROGRAM_LIST.filter(search).map((program) => (
                             <li
+                                key={program.address}
                                 onClick={() => setSelectedProgram(program)}
                                 className="cursor-pointer"
                             >
-                                <div className="border-2 border-[#C2C2FF] py-5 px-8 rounded flex flex-col gap-1">
-                                    <span className="text-[#374151] text-[18px] font-semibold">
+                                <div className="bg-[#F6F8FF] border border-[#CCD8FF] py-5 px-8 rounded shadow-sm hover:border-[#576EB7] transition-all duration-200">
+                                    <span className="text-[#657082] text-base font-medium block tracking-wide">
                                         {program.displayName}
                                     </span>
-                                    <span className="text-[#4F5A6C] text-[14px]">
+                                    <span className="text-[#657082] text-xs mt-1 block tracking-wide font-mono">
                                         {program.address}
                                     </span>
                                 </div>
@@ -820,7 +776,7 @@ function Programs() {
                         ))}
                     </ul>
                 )}
-                {selectedProgram && (
+                {selectedProgram &&
                     <>
                         {selectedProgram &&
                             !dappDetailsLoading &&
@@ -923,7 +879,7 @@ function Programs() {
                             </>
                         )}
                     </>
-                )}
+                }
             </div>
         </Page>
     );
