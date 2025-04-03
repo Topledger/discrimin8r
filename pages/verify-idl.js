@@ -98,8 +98,8 @@ const VerifyForm = ({ dappAddress, setDappAddress, blockSlot, setBlockSlot, onFi
                 </div>
                 <button
                     onClick={onVerify}
+                    className="w-full px-6 py-3 bg-accent text-white rounded hover:opacity-80 transition-all duration-200 whitespace-nowrap font-bold text-sm shadow-sm disabled:opacity-50 disabled:cursor-not-allowed"
                     disabled={loading || !dappAddress.trim() || !blockSlot.trim()}
-                    className="w-full px-6 py-3 bg-[#EAEFFF] text-[#576EB7] border border-[#CCD8FF] rounded hover:bg-[#DCE3FF] transition-colors duration-200 font-medium text-base shadow-sm disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                     {loading ? (
                         <div className="flex items-center justify-center gap-2">
@@ -121,7 +121,7 @@ const VerifyForm = ({ dappAddress, setDappAddress, blockSlot, setBlockSlot, onFi
                                 <line x1="4.93" y1="19.07" x2="7.76" y2="16.24" />
                                 <line x1="16.24" y1="7.76" x2="19.07" y2="4.93" />
                             </svg>
-                            Verifying...
+                            <span>Verifying...</span>
                         </div>
                     ) : (
                         "Verify"

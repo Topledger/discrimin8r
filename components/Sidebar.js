@@ -62,27 +62,25 @@ const aboutMenuItem = {
 
 const Sidebar = ({ onCollapse }) => {
     const router = useRouter();
-    const [isCollapsed, setIsCollapsed] = useState(false);
-
-    // Load collapsed state from localStorage on component mount
-    useEffect(() => {
-        const savedState = localStorage.getItem('sidebarCollapsed');
-        if (savedState !== null) {
-            const collapsed = JSON.parse(savedState);
-            setIsCollapsed(collapsed);
-            onCollapse?.(collapsed);
+    // Initialize state from localStorage
+    const [isCollapsed, setIsCollapsed] = useState(() => {
+        if (typeof window !== 'undefined') {
+            const savedState = localStorage.getItem('sidebarCollapsed');
+            return savedState !== null ? JSON.parse(savedState) : false;
         }
+        return false;
+    });
+
+    // Notify parent and save to localStorage when state changes
+    const handleCollapseChange = useCallback((newState) => {
+        setIsCollapsed(newState);
+        localStorage.setItem('sidebarCollapsed', JSON.stringify(newState));
+        onCollapse?.(newState);
     }, [onCollapse]);
 
-    // Save collapsed state to localStorage when it changes
-    useEffect(() => {
-        localStorage.setItem('sidebarCollapsed', JSON.stringify(isCollapsed));
-        onCollapse?.(isCollapsed);
-    }, [isCollapsed, onCollapse]);
-
     const toggleCollapse = useCallback(() => {
-        setIsCollapsed(prev => !prev);
-    }, []);
+        handleCollapseChange(!isCollapsed);
+    }, [isCollapsed, handleCollapseChange]);
 
     return (
         <aside

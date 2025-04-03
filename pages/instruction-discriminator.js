@@ -5,9 +5,22 @@ const SearchHeader = ({ value, onChange, onSearch }) => {
     return (
         <div className="flex flex-col items-center gap-10 w-full max-w-2xl">
             <div className="flex items-center space-x-3 w-full">
-                <div className="flex items-center bg-white border border-[#CCD8FF] rounded px-4 py-3 flex-1 focus-within:border-[#576EB7] focus-within:ring-1 focus-within:ring-[#576EB7] transition-all duration-200 shadow-sm">
+                <div className="flex-1 relative">
+                    <input
+                        type="text"
+                        value={value}
+                        onChange={(e) => onChange(e.target.value)}
+                        onKeyDown={(e) => {
+                            if (e.key === 'Enter') {
+                                onSearch();
+                            }
+                        }}
+                        className="w-full px-4 py-3 pl-11 border border-[#CCD8FF] rounded focus:border-[#576EB7] focus:ring-1 focus:ring-[#576EB7] transition-all duration-200 shadow-sm text-base text-[#657082] tracking-wide"
+                        placeholder="Enter base58 encoded string or hex data"
+                        aria-label="Instruction name input"
+                    />
                     <svg
-                        className="h-5 w-5 text-[#657082]"
+                        className="h-5 w-5 text-[#657082] absolute left-4 top-1/2 -translate-y-1/2"
                         fill="none"
                         viewBox="0 0 24 24"
                         stroke="currentColor"
@@ -19,22 +32,10 @@ const SearchHeader = ({ value, onChange, onSearch }) => {
                             d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
                         />
                     </svg>
-                    <input
-                        className="ml-3 outline-none text-[#657082] placeholder-[#657082] w-full text-lg"
-                        value={value}
-                        onChange={(e) => onChange(e.target.value)}
-                        onKeyDown={(e) => {
-                            if (e.key === 'Enter') {
-                                onSearch();
-                            }
-                        }}
-                        placeholder="Enter base58 encoded string or hex data"
-                        aria-label="Instruction name input"
-                    />
                 </div>
                 <button
                     onClick={onSearch}
-                    className="px-6 py-3 bg-[#EAEFFF] text-[#576EB7] border border-[#CCD8FF] rounded hover:bg-[#DCE3FF] transition-colors duration-200 whitespace-nowrap font-medium text-lg shadow-sm disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="px-6 py-3 bg-accent text-white rounded hover:opacity-80 transition-all duration-200 whitespace-nowrap font-bold text-sm shadow-sm disabled:opacity-50 disabled:cursor-not-allowed"
                     disabled={!value.trim()}
                 >
                     Search
