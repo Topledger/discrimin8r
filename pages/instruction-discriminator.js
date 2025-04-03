@@ -90,24 +90,9 @@ function InstructionDiscriminator() {
                 />
                 {loading && (
                     <div className="w-full flex items-center justify-center p-10">
-                        <svg
-                            className="h-8 w-8 text-[#888] animate-[spin_2s_linear_infinite]"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            strokeWidth="2"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                        >
-                            <line x1="12" y1="2" x2="12" y2="6" />
-                            <line x1="12" y1="18" x2="12" y2="22" />
-                            <line x1="4.93" y1="4.93" x2="7.76" y2="7.76" />
-                            <line x1="16.24" y1="16.24" x2="19.07" y2="19.07" />
-                            <line x1="2" y1="12" x2="6" y2="12" />
-                            <line x1="18" y1="12" x2="22" y2="12" />
-                            <line x1="4.93" y1="19.07" x2="7.76" y2="16.24" />
-                            <line x1="16.24" y1="7.76" x2="19.07" y2="4.93" />
-                        </svg>
+                        <div className="flex items-center gap-2">
+                            <div className="text-[#888]">Loading...</div>
+                        </div>
                     </div>
                 )}
                 {error && (
@@ -121,7 +106,7 @@ function InstructionDiscriminator() {
                     </div>
                 )}
                 {result && result.discriminator && (
-                    <div className="w-full max-w-2xl border border-[#CCD8FF] rounded-lg p-8 bg-[#F6F8FF] shadow-sm">
+                    <div className="w-full max-w-2xl border border-[#CCD8FF] rounded p-8 bg-[#F6F8FF] shadow-sm">
                         <div className="flex flex-col gap-8">
                             <div className="flex flex-col gap-2">
                                 <span className="text-[#657082] font-medium text-sm">Discriminator</span>
