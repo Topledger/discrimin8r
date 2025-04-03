@@ -11,9 +11,10 @@ const Page = ({ title, subtitle, children, searchValue, onSearchChange, showSear
     useEffect(() => {
         const savedState = localStorage.getItem('sidebarCollapsed');
         if (savedState !== null) {
-            setIsCollapsed(JSON.parse(savedState));
+            const collapsed = JSON.parse(savedState);
+            setIsCollapsed(collapsed);
         }
-    }, []);
+    }, []); // Only run on mount
 
     const handleSidebarCollapse = (collapsed) => {
         setIsCollapsed(collapsed);
@@ -30,7 +31,7 @@ const Page = ({ title, subtitle, children, searchValue, onSearchChange, showSear
             <div className="flex min-h-screen bg-[#F3F3FF]">
                 <Sidebar onCollapse={handleSidebarCollapse} />
                 <main
-                    className={`flex-1 transition-all duration-300 ${isCollapsed ? 'ml-16' : 'ml-64'} min-h-screen flex flex-col`}
+                    className={`flex-1 ${isCollapsed ? 'ml-16' : 'ml-64'} min-h-screen flex flex-col`}
                     style={{
                         width: isCollapsed ? 'calc(100% - 4rem)' : 'calc(100% - 16rem)',
                         maxWidth: '100%'
