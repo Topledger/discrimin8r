@@ -1,40 +1,36 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 
-export const getId = () => {
-    return Math.random().toString(32).slice(2, 10);
-};
-
-const isBrowser = () => {
-    return Boolean(
-        typeof window !== "undefined" &&
-            window.document &&
-            window.document.createElement
-    );
-};
-
-const createElement = (id) => {
-    const el = document.createElement("div");
-    el.setAttribute("id", id);
-    return el;
-};
-
-const usePortal = (selectId = getId()) => {
-    const id = `zeit-ui-${selectId}`;
-    const [elSnapshot, setElSnapshot] = useState(
-        isBrowser ? createElement(id) : null
-    );
+const usePortal = (id = "default") => {
+    const [portal, setPortal] = useState(null);
+    const cleanup = useRef(null);
 
     useEffect(() => {
-        const hasElement = document.querySelector(`#${id}`);
-        const el = hasElement || createElement(id);
+        // Only run on client side
+        if (typeof window === "undefined") return;
 
-        if (!hasElement) {
-            document.body.appendChild(el);
+        const portalId = `zeit-ui-${id}`;
+        let element = document.getElementById(portalId);
+        let shouldRemove = false;
+
+        if (!element) {
+            shouldRemove = true;
+            element = document.createElement("div");
+            element.id = portalId;
+            document.body.appendChild(element);
         }
-        setElSnapshot(el);
-    }, []);
 
-    return elSnapshot;
+        setPortal(element);
+        cleanup.current = shouldRemove;
+
+        return () => {
+            if (cleanup.current && element?.parentElement) {
+                element.parentElement.removeChild(element);
+            }
+        };
+    }, [id]);
+
+    if (typeof window === "undefined") return null;
+    return portal;
 };
 
 export default usePortal;

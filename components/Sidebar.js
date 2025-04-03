@@ -62,16 +62,17 @@ const aboutMenuItem = {
 
 const Sidebar = ({ onCollapse }) => {
     const router = useRouter();
-    // Initialize state from localStorage
-    const [isCollapsed, setIsCollapsed] = useState(() => {
-        if (typeof window !== 'undefined') {
-            const savedState = localStorage.getItem('sidebarCollapsed');
-            return savedState !== null ? JSON.parse(savedState) : false;
-        }
-        return false;
-    });
+    const [isCollapsed, setIsCollapsed] = useState(false);
+    const [isMounted, setIsMounted] = useState(false);
 
-    // Notify parent and save to localStorage when state changes
+    useEffect(() => {
+        const savedState = localStorage.getItem('sidebarCollapsed');
+        if (savedState !== null) {
+            setIsCollapsed(JSON.parse(savedState));
+        }
+        setIsMounted(true);
+    }, []);
+
     const handleCollapseChange = useCallback((newState) => {
         setIsCollapsed(newState);
         localStorage.setItem('sidebarCollapsed', JSON.stringify(newState));
@@ -82,6 +83,8 @@ const Sidebar = ({ onCollapse }) => {
         handleCollapseChange(!isCollapsed);
     }, [isCollapsed, handleCollapseChange]);
 
+    if (!isMounted) return null;
+
     return (
         <aside
             className={`${isCollapsed ? 'w-16' : 'w-64'} bg-white border-r border-[#CCD8FF] h-screen fixed left-0 top-0 transition-all duration-500 ease-in-out z-10 flex flex-col`}
@@ -91,22 +94,20 @@ const Sidebar = ({ onCollapse }) => {
                     <div className={`flex items-center ${isCollapsed ? 'justify-center' : 'justify-between'} transition-all duration-500 ease-in-out h-full`}>
                         {isCollapsed ? (
                             <div className="flex items-center transition-all duration-500 ease-in-out">
-                                <h1 className="text-3xl font-bold text-[#576EB7] transition-all duration-500 ease-in-out">🎱</h1>
+                                <h1 className="text-3xl font-bold text-[#576EB7] transition-opacity duration-500 ease-in-out" style={{
+                                    opacity: isCollapsed ? '1' : '0'
+                                }}>
+                                    🎱
+                                </h1>
                             </div>
                         ) : (
                             <div className="flex flex-col justify-center h-full">
-                                <h1 className="text-xl font-bold text-[#576EB7] transition-all duration-500 ease-in-out whitespace-nowrap" style={{
-                                    transition: isCollapsed ? 'all 500ms ease-in-out' : 'opacity 500ms ease-in-out, width 0ms linear 500ms',
-                                    width: isCollapsed ? '0' : 'auto',
+                                <h1 className="text-xl font-bold text-[#576EB7] transition-opacity duration-500 ease-in-out whitespace-nowrap" style={{
                                     opacity: isCollapsed ? '0' : '1'
                                 }}>
                                     discrimin🎱r
                                 </h1>
-                                <span className="text-xs text-[#657082] transition-all duration-500 ease-in-out whitespace-nowrap" style={{
-                                    transition: isCollapsed ? 'all 500ms ease-in-out' : 'opacity 500ms ease-in-out, width 0ms linear 500ms',
-                                    width: isCollapsed ? '0' : 'auto',
-                                    opacity: isCollapsed ? '0' : '1'
-                                }}>
+                                <span className="text-xs text-[#657082] transition-opacity duration-500 ease-in-out whitespace-nowrap">
                                     by Top Ledger
                                 </span>
                             </div>
@@ -118,7 +119,7 @@ const Sidebar = ({ onCollapse }) => {
                                 title={isCollapsed ? "Expand sidebar" : "Collapse sidebar"}
                             >
                                 <svg
-                                    className="w-5 h-5 text-[#576EB7] transition-transform duration-500 ease-in-out"
+                                    className="w-5 h-5 text-[#657082] transition-transform duration-500 ease-in-out"
                                     fill="none"
                                     viewBox="0 0 24 24"
                                     stroke="currentColor"
@@ -148,7 +149,9 @@ const Sidebar = ({ onCollapse }) => {
                                 {item.icon}
                             </div>
                             <span className={`ml-3 text-sm whitespace-nowrap transition-all duration-500 ease-in-out ${isCollapsed ? 'opacity-0 w-0' : 'opacity-100'}`} style={{
-                                transition: isCollapsed ? 'opacity 0ms linear, width 0ms linear' : 'opacity 500ms ease-in-out, width 500ms ease-in-out',
+                                transition: isCollapsed
+                                    ? 'opacity 0ms linear, width 0ms linear'
+                                    : 'opacity 500ms ease-in-out, width 500ms ease-in-out',
                                 width: isCollapsed ? '0' : 'auto'
                             }}>
                                 {item.name}
@@ -174,7 +177,9 @@ const Sidebar = ({ onCollapse }) => {
                         {aboutMenuItem.icon}
                     </div>
                     <span className={`ml-3 text-sm whitespace-nowrap transition-all duration-500 ease-in-out ${isCollapsed ? 'opacity-0 w-0' : 'opacity-100'}`} style={{
-                        transition: isCollapsed ? 'opacity 0ms linear, width 0ms linear' : 'opacity 500ms ease-in-out, width 500ms ease-in-out',
+                        transition: isCollapsed
+                            ? 'opacity 0ms linear, width 0ms linear'
+                            : 'opacity 500ms ease-in-out, width 500ms ease-in-out',
                         width: isCollapsed ? '0' : 'auto'
                     }}>
                         {aboutMenuItem.name}
@@ -191,4 +196,4 @@ const Sidebar = ({ onCollapse }) => {
     );
 };
 
-export default Sidebar; 
+export default Sidebar;
