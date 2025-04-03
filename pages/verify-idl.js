@@ -217,10 +217,10 @@ function VerifyIDL() {
                             </div>
                         ) : (
                             <div className="flex items-center gap-2">
-                                <svg className="h-6 w-6 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <svg className="h-6 w-6 text-red-500" fill="none" viewBox="0 0 24 24" stroke="#c96262">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
                                 </svg>
-                                <span className="text-red-500 text-base font-semibold tracking-wide">Verification Failed</span>
+                                <span className="text-[#c96262] text-base font-semibold tracking-wide">Verification Failed</span>
                             </div>
                         )}
                     </div>

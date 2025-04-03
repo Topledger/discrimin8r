@@ -786,29 +786,7 @@ function Programs() {
                                     No Data found for selected program
                                 </div>
                             )}
-                        {!!dappDetails && !!dappDetails.instruction_discriminators && (
-                            <CodeBlock
-                                title="Instruction Discriminators"
-                                text={dappDetails.instruction_discriminators.join("\n")}
-                                verified={true}
-                            />
-                        )}
 
-                        {!!dappDetails && !!dappDetails.event_discriminators && (
-                            <CodeBlock
-                                title="Event Discriminators"
-                                text={dappDetails.event_discriminators.join("\n")}
-                                verified={true}
-                            />
-                        )}
-
-                        {!!dappDetails && !!dappDetails.input_account_mappings && (
-                            <CodeBlock
-                                title="Input Account Mappings"
-                                text={dappDetails.input_account_mappings.join("\n")}
-                                verified={true}
-                            />
-                        )}
 
                         {!!dappDetails && !!dappDetails.python_parser && (
                             <CodeBlock

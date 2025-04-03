@@ -98,10 +98,10 @@ function InstructionName() {
                 {error && (
                     <div className="w-full flex items-center justify-center p-10">
                         <div className="flex items-center gap-3 text-red-500 bg-red-50 px-6 py-4 rounded-lg">
-                            <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="#c96262">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                             </svg>
-                            <span className="text-lg">{error}</span>
+                            <span className="text-md text-[#c96262]">{error}</span>
                         </div>
                     </div>
                 )}
