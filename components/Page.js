@@ -7,6 +7,7 @@ import React from "react";
 
 const Page = ({ title, subtitle, children, searchValue, onSearchChange, showSearch, breadcrumb, onBreadcrumbClick }) => {
     const [isCollapsed, setIsCollapsed] = useState(false);
+    const [isTransitioning, setIsTransitioning] = useState(false);
 
     useEffect(() => {
         const savedState = localStorage.getItem('sidebarCollapsed');
@@ -17,7 +18,10 @@ const Page = ({ title, subtitle, children, searchValue, onSearchChange, showSear
     }, []); // Only run on mount
 
     const handleSidebarCollapse = (collapsed) => {
+        setIsTransitioning(true);
         setIsCollapsed(collapsed);
+        // Remove transition after animation completes
+        setTimeout(() => setIsTransitioning(false), 300);
     };
 
     return (
@@ -31,7 +35,7 @@ const Page = ({ title, subtitle, children, searchValue, onSearchChange, showSear
             <div className="flex min-h-screen bg-[#F3F3FF]">
                 <Sidebar onCollapse={handleSidebarCollapse} />
                 <main
-                    className={`flex-1 ${isCollapsed ? 'ml-16' : 'ml-64'} min-h-screen flex flex-col`}
+                    className={`flex-1 ${isCollapsed ? 'ml-16' : 'ml-64'} min-h-screen flex flex-col ${isTransitioning ? 'transition-all duration-300 ease-in-out' : ''}`}
                     style={{
                         width: isCollapsed ? 'calc(100% - 4rem)' : 'calc(100% - 16rem)',
                         maxWidth: '100%'
