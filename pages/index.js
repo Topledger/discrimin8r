@@ -100,7 +100,7 @@ const UploadForm = ({ onChange, isLoading }) => {
 
     return (
         <form
-            className={`relative flex flex-col items-center border-2 border-dashed rounded-lg transition-all duration-200 p-10 py-20 w-full gap-4 cursor-pointer ${isDragging ? "border-[#576EB7] bg-[#F6F8FF]" : "border-[#CCD8FF] bg-[#F6F8FF]"
+            className={`relative flex flex-col items-center border-2 border-dashed rounded transition-all duration-200 p-10 py-20 w-full gap-4 cursor-pointer ${isDragging ? "border-[#576EB7] bg-[#F6F8FF]" : "border-[#CCD8FF] bg-[#F6F8FF]"
                 }`}
             onDragOver={handleDragOver}
             onDragLeave={handleDragLeave}
