@@ -154,7 +154,8 @@ const Sidebar = ({ onCollapse }) => {
                                 {item.name}
                             </span>
                             {isCollapsed && (
-                                <div className="absolute left-full ml-2 bg-white border border-[#CCD8FF] text-[#657082] px-3 py-2 rounded-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-500 ease-in-out whitespace-nowrap z-50">
+                                <div className="absolute left-full ml-2 bg-white border border-[#CCD8FF] text-[#657082] px-3 py-2 rounded opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-opacity duration-200 ease-in-out whitespace-nowrap z-50 shadow-sm font-medium tracking-wide text-sm">
+                                    <div className="absolute -left-1 top-1/2 -translate-y-1/2 w-2 h-2 bg-white border-l border-t border-[#CCD8FF] transform -rotate-45"></div>
                                     {item.name}
                                 </div>
                             )}
@@ -179,7 +180,8 @@ const Sidebar = ({ onCollapse }) => {
                         {aboutMenuItem.name}
                     </span>
                     {isCollapsed && (
-                        <div className="absolute left-full ml-2 bg-white border border-[#CCD8FF] text-[#657082] px-3 py-2 rounded-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-500 ease-in-out whitespace-nowrap z-50">
+                        <div className="absolute left-full ml-2 bg-white border border-[#CCD8FF] text-[#657082] px-3 py-2 rounded opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-opacity duration-200 ease-in-out whitespace-nowrap z-50 shadow-sm font-medium tracking-wide text-sm">
+                            <div className="absolute -left-1 top-1/2 -translate-y-1/2 w-2 h-2 bg-white border-l border-t border-[#CCD8FF] transform -rotate-45"></div>
                             {aboutMenuItem.name}
                         </div>
                     )}
