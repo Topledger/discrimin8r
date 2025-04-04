@@ -1,64 +1,6 @@
 import { useState, useRef, useEffect, useCallback } from "react";
-import Modal from "../components/modal";
-import { } from "react-code-blocks/dist";
 import Page from "../components/Page";
 import CodeBlock from "../components/CodeBlock";
-
-const UploadButton = ({ onChange, isLoading }) => (
-    <div className="">
-        <input
-            id="idl-file"
-            type="file"
-            name="media_file"
-            onChange={(event) => onChange(event)}
-            accept="application/json"
-            className="hidden"
-        />
-        <label
-            htmlFor="idl-file"
-            className="mr-2 text-ltp cursor-pointer flex items-center gap-4 bg-[#EAEFFF] border border-[#CCD8FF] rounded-lg p-4 px-6"
-        >
-            {isLoading ? (
-                <svg
-                    className="h-6 w-6 text-[#888] animate-[spin_2s_linear_infinite]"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                >
-                    <line x1="12" y1="2" x2="12" y2="6" />
-                    <line x1="12" y1="18" x2="12" y2="22" />
-                    <line x1="4.93" y1="4.93" x2="7.76" y2="7.76" />
-                    <line x1="16.24" y1="16.24" x2="19.07" y2="19.07" />
-                    <line x1="2" y1="12" x2="6" y2="12" />
-                    <line x1="18" y1="12" x2="22" y2="12" />
-                    <line x1="4.93" y1="19.07" x2="7.76" y2="16.24" />
-                    <line x1="16.24" y1="7.76" x2="19.07" y2="4.93" />
-                </svg>
-            ) : (
-                <svg
-                    className="h-8 w-8 text-red-500"
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    stroke-width="2"
-                    stroke="currentColor"
-                    fill="none"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                >
-                    <path stroke="none" d="M0 0h24v24H0z" />
-                    <path d="M7 18a4.6 4.4 0 0 1 0 -9h0a5 4.5 0 0 1 11 2h1a3.5 3.5 0 0 1 0 7h-1" />
-                    <polyline points="9 15 12 12 15 15" />
-                    <line x1="12" y1="12" x2="12" y2="21" />
-                </svg>
-            )}
-            Upload IDL
-        </label>
-    </div>
-);
 
 const UploadForm = ({ onChange, isLoading }) => {
     const [isDragging, setIsDragging] = useState(false);
@@ -84,7 +26,6 @@ const UploadForm = ({ onChange, isLoading }) => {
     }, [onChange]);
 
     const handleClick = useCallback((e) => {
-        // Prevent click if clicking on the file input
         if (e.target === fileInputRef.current) {
             return;
         }
@@ -100,8 +41,7 @@ const UploadForm = ({ onChange, isLoading }) => {
 
     return (
         <form
-            className={`relative flex flex-col items-center border-2 border-dashed rounded transition-all duration-200 p-10 py-20 w-full gap-4 cursor-pointer ${isDragging ? "border-[#576EB7] bg-[#F6F8FF]" : "border-[#CCD8FF] bg-[#F6F8FF]"
-                }`}
+            className={`relative flex flex-col items-center border-2 border-dashed rounded transition-all duration-200 p-10 py-20 w-full gap-4 cursor-pointer ${isDragging ? "border-[#576EB7] bg-[#F6F8FF]" : "border-[#CCD8FF] bg-[#F6F8FF]"}`}
             onDragOver={handleDragOver}
             onDragLeave={handleDragLeave}
             onDrop={handleDrop}
@@ -163,11 +103,11 @@ const UploadForm = ({ onChange, isLoading }) => {
     );
 };
 
-export default function Home(props) {
+export default function Home() {
     const [modalConfig, setModalConfig] = useState({ show: false });
     const [dappDetailsInProgress, setDappDetailsInProgress] = useState(false);
-    const [dappDetails, setDappDetails] = useState(null);
     const [verified, setVerified] = useState(false);
+    const [dappDetails, setDappDetails] = useState(null);
     const resultRef = useRef(null);
 
     useEffect(() => {
@@ -198,6 +138,7 @@ export default function Home(props) {
                 setDappDetailsInProgress(false);
             } catch (error) {
                 console.log("error", error);
+                setDappDetails(null);
                 setDappDetailsInProgress(false);
             }
         };

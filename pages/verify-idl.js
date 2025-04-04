@@ -1,5 +1,6 @@
 import React, { useState, useCallback, useRef, useEffect } from "react";
 import Page from "../components/Page";
+import useStore from "../store"; // Import the Zustand store
 
 const FileUpload = ({ onFileChange, fileName }) => {
     const [isDragging, setIsDragging] = useState(false);
@@ -117,31 +118,41 @@ const VerifyForm = ({ dappAddress, setDappAddress, blockSlot, setBlockSlot, onFi
 };
 
 function VerifyIDL() {
-    const [dappAddress, setDappAddress] = useState("");
-    const [blockSlot, setBlockSlot] = useState("");
-    const [idl, setIdl] = useState(null);
-    const [fileName, setFileName] = useState("");
+    // Local state for transient UI states
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
-    const [result, setResult] = useState(null);
     const resultRef = useRef(null);
+
+    // Global state from Zustand
+    const dappAddress = useStore((state) => state.verifyIdlDappAddress);
+    const setDappAddress = useStore((state) => state.setVerifyIdlDappAddress);
+    const blockSlot = useStore((state) => state.verifyIdlBlockSlot);
+    const setBlockSlot = useStore((state) => state.setVerifyIdlBlockSlot);
+    const idl = useStore((state) => state.verifyIdlFileContent);
+    const setIdl = useStore((state) => state.setVerifyIdlFileContent);
+    const fileName = useStore((state) => state.verifyIdlFileName);
+    const setFileName = useStore((state) => state.setVerifyIdlFileName);
+    const result = useStore((state) => state.verifyIdlResult);
+    const setResult = useStore((state) => state.setVerifyIdlResult);
 
     useEffect(() => {
         if (result?.success && resultRef.current) {
             resultRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
-    }, [result]);
+    }, [result]); // result now comes from store
 
     const onFileChange = (e) => {
         const file = e.target.files[0];
         if (file) {
-            setFileName(file.name);
+            setFileName(file.name); // Update filename in store
             const reader = new FileReader();
             reader.onload = (event) => {
                 try {
                     const parsed = JSON.parse(event.target.result);
-                    setIdl(parsed);
+                    setIdl(parsed); // Update IDL content in store
+                    setError(null); // Clear previous errors
                 } catch (err) {
+                    setIdl(null); // Clear IDL content on parse error
                     setError("Invalid JSON file.");
                 }
             };
@@ -156,7 +167,7 @@ function VerifyIDL() {
         }
         setLoading(true);
         setError(null);
-        setResult(null);
+        setResult(null); // Clear previous result from store
         try {
             const res = await fetch("https://apis.topledger.xyz/api/verify-idl", {
                 method: "POST",
@@ -164,16 +175,18 @@ function VerifyIDL() {
                 body: JSON.stringify({
                     dapp_address: dappAddress,
                     block_slot: Number(blockSlot),
-                    idl: idl,
+                    idl: idl, // Read IDL content from store
                 })
             });
             if (!res.ok) {
-                throw new Error("Network response was not ok");
+                // Read response body for potential error details if needed
+                const errorData = await res.json().catch(() => ({})); // Try to parse error JSON
+                throw new Error(errorData.error || `Network response was not ok: ${res.statusText}`);
             }
             const data = await res.json();
-            setResult(data);
+            setResult(data); // Set result in store
         } catch (err) {
-            setError("Error verifying IDL.");
+            setError(err.message || "Error verifying IDL.");
         }
         setLoading(false);
     };
@@ -182,15 +195,15 @@ function VerifyIDL() {
         <Page title="Verify IDL" subtitle="Verify your IDL file against a deployed program">
             <div className="flex flex-col items-center gap-10 w-full mt-12">
                 <VerifyForm
-                    dappAddress={dappAddress}
-                    setDappAddress={setDappAddress}
-                    blockSlot={blockSlot}
-                    setBlockSlot={setBlockSlot}
+                    dappAddress={dappAddress} // from store
+                    setDappAddress={setDappAddress} // from store
+                    blockSlot={blockSlot} // from store
+                    setBlockSlot={setBlockSlot} // from store
                     onFileChange={onFileChange}
                     onVerify={handleVerify}
-                    loading={loading}
-                    error={error}
-                    fileName={fileName}
+                    loading={loading} // local
+                    error={error} // local
+                    fileName={fileName} // from store
                 />
                 {result && (
                     <div ref={resultRef} className="w-full max-w-2xl border border-[#CCD8FF] rounded p-8 bg-white shadow-sm">

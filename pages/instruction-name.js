@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Page from "../components/Page";
+import useStore from "../store"; // Import the Zustand store
 
 const SearchHeader = ({ value, onChange, onSearch }) => {
     return (
@@ -46,17 +47,22 @@ const SearchHeader = ({ value, onChange, onSearch }) => {
 };
 
 function InstructionName() {
-    const [instruction, setInstruction] = useState("");
+    // Local state for transient UI states
     const [loading, setLoading] = useState(false);
-    const [result, setResult] = useState(null);
     const [error, setError] = useState(null);
     const [copiedText, setCopiedText] = useState("");
+
+    // Global state from Zustand
+    const instruction = useStore((state) => state.instructionNameInput);
+    const setInstruction = useStore((state) => state.setInstructionNameInput);
+    const result = useStore((state) => state.instructionNameResult);
+    const setResult = useStore((state) => state.setInstructionNameResult);
 
     const handleSearch = async () => {
         if (instruction.length < 2) return;
         setLoading(true);
         setError(null);
-        setResult(null);
+        setResult(null); // Clear previous result from the store
         try {
             const res = await fetch("https://apis.topledger.xyz/api/instruction", {
                 method: "POST",
@@ -67,7 +73,7 @@ function InstructionName() {
             if (!res.ok) {
                 throw new Error(data.error || "Network response was not ok");
             }
-            setResult(data);
+            setResult(data); // Set result in the store
         } catch (err) {
             setError(err.message || "Error loading data");
         }
@@ -84,8 +90,8 @@ function InstructionName() {
         <Page title="Instruction Name" subtitle="Get the instruction name from a base58 encoded string or hex data for Anchor-based programs">
             <div className="flex flex-col items-center gap-10 w-full mt-12">
                 <SearchHeader
-                    value={instruction}
-                    onChange={setInstruction}
+                    value={instruction} // Read from store
+                    onChange={setInstruction} // Write to store
                     onSearch={handleSearch}
                 />
                 {loading && (
