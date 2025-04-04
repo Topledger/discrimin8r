@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useState, useEffect, useCallback } from 'react';
+import MobileView from './MobileView';
 
 const menuItems = [
     {
@@ -64,6 +65,7 @@ const Sidebar = ({ onCollapse }) => {
     const router = useRouter();
     const [isCollapsed, setIsCollapsed] = useState(false);
     const [isMounted, setIsMounted] = useState(false);
+    const [isMobile, setIsMobile] = useState(false);
 
     useEffect(() => {
         const savedState = localStorage.getItem('sidebarCollapsed');
@@ -71,6 +73,17 @@ const Sidebar = ({ onCollapse }) => {
             setIsCollapsed(JSON.parse(savedState));
         }
         setIsMounted(true);
+
+        const checkIfMobile = () => {
+            setIsMobile(window.innerWidth < 768);
+        };
+
+        checkIfMobile();
+        window.addEventListener('resize', checkIfMobile);
+
+        return () => {
+            window.removeEventListener('resize', checkIfMobile);
+        };
     }, []);
 
     const handleCollapseChange = useCallback((newState) => {
@@ -84,6 +97,10 @@ const Sidebar = ({ onCollapse }) => {
     }, [isCollapsed, handleCollapseChange]);
 
     if (!isMounted) return null;
+
+    if (isMobile) {
+        return <MobileView />;
+    }
 
     return (
         <aside
