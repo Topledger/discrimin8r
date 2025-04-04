@@ -699,8 +699,9 @@ const PROGRAM_LIST = [
 ];
 
 function Programs() {
-    const [selectedProgram, setSelectedProgram] = useState();
+    const [selectedProgram, setSelectedProgram] = useState(null);
     const [searchText, setSearchText] = useState("");
+
     const { data: dappDetails, isLoading: dappDetailsLoading } = useQuery({
         queryKey: ["ProgramData", selectedProgram?.address],
         queryFn: () => {
