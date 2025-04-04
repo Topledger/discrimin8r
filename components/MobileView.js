@@ -21,7 +21,7 @@ const MobileView = () => {
             <div className="flex flex-col items-center">
                 <h1 className="text-2xl font-bold text-[#576EB7] mb-1">discrimin🎱r</h1>
                 <span className="text-xs text-[#657082] mb-4">by Top Ledger</span>
-                <p className="text-base text-gray-600">Please use a desktop to view this site.</p>
+                <p className="text-sm text-[#657082]">Please use a desktop to view this site.</p>
             </div>
             <div className="absolute bottom-5 left-0 right-0 text-center">
                 <a
