@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-* {
+body {
     font-family: 'Inter', sans-serif;
     font-optical-sizing: auto;
     font-style: normal;
@@ -95,4 +95,45 @@
         /*opacity: 0.6;*/
         transform: scale(1.0);
     }
+}
+
+/* CodeMirror Selection Override */
+/* Use ::selection pseudo-element within the editor */
+.cm-editor ::selection {
+    color: unset !important;
+    /* Force text color to revert */
+    /* The background is handled by the theme's selection setting */
+}
+
+/* Custom scrollbar styles */
+::-webkit-scrollbar {
+    width: 6px;
+    /* Adjust width as needed */
+    height: 6px;
+    /* Adjust height for horizontal scrollbar */
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    /* Light grey track */
+    border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #c1c1c1;
+    /* Slightly darker grey thumb */
+    border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #a1a1a1;
+    /* Darker grey thumb on hover */
+}
+
+/* For Firefox (less customization available) */
+html {
+    scrollbar-width: thin;
+    /* "auto" or "thin" */
+    scrollbar-color: #c1c1c1 #f1f1f1;
+    /* thumb and track color */
 }

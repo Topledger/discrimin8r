@@ -30,12 +30,13 @@ const myTheme = createTheme({
         background: '#FFFFFF',
         foreground: '#1F2937',
         caret: '#1F2937',
-        selection: '#E5E7EB',
-        selectionMatch: '#D1D5DB',
-        lineHighlight: '#F9FAFB', // Highlight for active line
-        gutterBackground: '#F9FAFB', // Line number background
-        gutterForeground: '#9CA3AF', // Line number color
-        gutterBorder: '#E5E7EB', // Separator line
+        selection: 'rgba(174, 203, 250, 0.4)',
+        selectionForeground: null,
+        selectionMatch: 'rgba(185, 213, 255, 0.3)',
+        lineHighlight: '#F9FAFB',
+        gutterBackground: '#F9FAFB',
+        gutterForeground: '#9CA3AF',
+        gutterBorder: '#E5E7EB',
     },
     styles: [
         // Match colors similar to the previous theme
@@ -183,7 +184,7 @@ const CodeBlock = ({ title, text, verified, isJson = false, isPythonParser = fal
                         rectangularSelection: false,
                         crosshairCursor: false,
                         highlightActiveLine: true,
-                        highlightSelectionMatches: true,
+                        highlightSelectionMatches: false,
                         closeBracketsKeymap: false,
                         defaultKeymap: false,
                         searchKeymap: false,
