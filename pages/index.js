@@ -158,6 +158,7 @@ export default function Home() {
                             title="Python Parser"
                             text={dappDetails.python_parser}
                             verified={verified}
+                            isPythonParser={true}
                         />
                     </div>
                 )}

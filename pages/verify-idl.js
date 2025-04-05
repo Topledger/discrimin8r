@@ -1,6 +1,11 @@
 import React, { useState, useCallback, useRef, useEffect } from "react";
 import Page from "../components/Page";
 import useStore from "../store"; // Import the Zustand store
+import dynamic from 'next/dynamic'; // Import dynamic from Next.js
+import CodeBlock from "../components/CodeBlock";
+
+// Dynamically import ReactJson with no SSR
+const ReactJson = dynamic(() => import('react-json-view'), { ssr: false });
 
 const FileUpload = ({ onFileChange, fileName }) => {
     const [isDragging, setIsDragging] = useState(false);
@@ -217,13 +222,14 @@ function VerifyIDL() {
                                 </div>
                                 <div className="flex flex-col gap-4">
                                     {result.data && (
-                                        <div className="flex flex-col gap-4">
-                                            <span className="text-[#657082] font-semibold text-base tracking-wide">Instructions:</span>
-                                            <div className="bg-[#F6F8FF] border border-[#CCD8FF] px-6 py-4 rounded shadow-sm overflow-x-auto">
-                                                <pre className="text-xs text-[#657082] font-mono leading-relaxed tracking-wide">
-                                                    {JSON.stringify(result.data, null, 2)}
-                                                </pre>
-                                            </div>
+                                        <div className="flex  flex-col gap-4">
+
+                                            <CodeBlock
+                                                title="Instructions"
+                                                text={result.data}
+                                                verified={true}
+                                                isJson={true}
+                                            />
                                         </div>
                                     )}
                                 </div>
