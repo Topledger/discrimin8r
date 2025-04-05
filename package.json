@@ -13,6 +13,7 @@
     "@tailwindcss/line-clamp": "^0.4.0",
     "@tanstack/react-query": "^5.59.0",
     "axios": "^1.7.7",
+    "bs58": "^6.0.0",
     "chart.js": "^4.4.1",
     "next": "^13.0.3",
     "react": "^18.2.0",
@@ -20,10 +21,13 @@
     "react-code-blocks": "^0.1.6",
     "react-dom": "^18.2.0",
     "react-fi": "^1.0.13",
+    "react-json-view": "^1.21.3",
     "react-lottie-player": "^2.0.0",
+    "react-syntax-highlighter": "^15.6.1",
     "react-to-print": "^2.14.9",
     "sass": "^1.79.4",
     "tailwind-merge": "^2.5.2",
+    "tl-dashboards": "^2.1.0-beta15",
     "zustand": "^5.0.3"
   },
   "devDependencies": {
