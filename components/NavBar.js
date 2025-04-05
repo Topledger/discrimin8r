@@ -16,8 +16,12 @@ const Navbar = () => {
         // Get the current path and set the selected tab
         const path = getWindow().location?.pathname || "";
         if (path === "/") {
-            setSelectedTab("upload");
-        } else if (path === "/instruction-name") {
+            setSelectedTab("home");
+        } else if (path === "/upload-idl") {
+            setSelectedTab("upload-idl");
+        }
+
+        else if (path === "/instruction-name") {
             setSelectedTab("instruction-name");
         } else if (path === "/instruction-discriminator") {
             setSelectedTab("instruction-discriminator");
@@ -62,6 +66,18 @@ const Navbar = () => {
                     </div>
                     {/* Primary Navbar items */}
                     <div className="hidden md:flex items-center space-x-3">
+                        <Link href="/" className={getTabClass("home")}>
+                            {/* Home Icon SVG */}
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                className="h-5 w-5 inline-block mr-1"
+                                viewBox="0 0 20 20"
+                                fill="currentColor"
+                            >
+                                <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z" />
+                            </svg>
+                            Home
+                        </Link>
                         <Link href="/" className={getTabClass("upload")}>
                             Upload
                         </Link>

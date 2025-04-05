@@ -4,23 +4,39 @@ import Sidebar from "./Sidebar";
 import PageHeader from "./PageHeader";
 import { useState, useEffect } from "react";
 import React from "react";
+import MobileView from "./MobileView";
 
 const Page = ({ title, subtitle, children, searchValue, onSearchChange, showSearch, breadcrumb, onBreadcrumbClick }) => {
     const [isCollapsed, setIsCollapsed] = useState(false);
     const [isTransitioning, setIsTransitioning] = useState(false);
     const [hydrated, setHydrated] = useState(false);
+    const [isMobile, setIsMobile] = useState(false);
 
     useEffect(() => {
+        // Set initial mobile state based on window width
+        if (typeof window !== 'undefined') {
+            setIsMobile(window.innerWidth < 768);
+        }
+        setHydrated(true);
+
         const savedState = localStorage.getItem('sidebarCollapsed');
         if (savedState !== null) {
             const collapsed = JSON.parse(savedState);
             setIsCollapsed(collapsed);
         }
-    }, []); // Only run on mount
 
-    useEffect(() => {
-        setHydrated(true);
-    }, []);
+        const checkIfMobile = () => {
+            setIsMobile(window.innerWidth < 768);
+        };
+
+        // Add resize listener
+        window.addEventListener('resize', checkIfMobile);
+
+        // Cleanup
+        return () => {
+            window.removeEventListener('resize', checkIfMobile);
+        };
+    }, []); // Empty dependency array
 
     const handleSidebarCollapse = (collapsed) => {
         setIsTransitioning(true);
@@ -28,6 +44,17 @@ const Page = ({ title, subtitle, children, searchValue, onSearchChange, showSear
         // Remove transition after animation completes
         setTimeout(() => setIsTransitioning(false), 300);
     };
+
+    // Don't render anything during SSR
+    if (typeof window === 'undefined') return null;
+
+    // Don't render until mounted
+    if (!hydrated) return null;
+
+    // Return mobile view if on mobile
+    if (isMobile) {
+        return <MobileView />;
+    }
 
     return (
         <>

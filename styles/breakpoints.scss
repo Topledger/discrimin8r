@@ -1,0 +1,55 @@
+// Breakpoint definitions
+$breakpoints: (
+    xs: 0,
+    sm: 576px,
+    md: 768px,
+    lg: 992px,
+    xl: 1200px,
+    xxl: 1400px
+);
+
+// Mixins for media queries
+@mixin min-width($breakpoint) {
+    @if map-has-key($breakpoints, $breakpoint) {
+        @media (min-width: map-get($breakpoints, $breakpoint)) {
+            @content;
+        }
+    }
+
+    @else {
+        @warn "Invalid breakpoint: #{$breakpoint}";
+    }
+}
+
+@mixin max-width($breakpoint) {
+    @if map-has-key($breakpoints, $breakpoint) {
+        @media (max-width: map-get($breakpoints, $breakpoint)) {
+            @content;
+        }
+    }
+
+    @else {
+        @warn "Invalid breakpoint: #{$breakpoint}";
+    }
+}
+
+// Specific device mixins
+@mixin mobile {
+    @include max-width(md) {
+        @content;
+    }
+}
+
+@mixin tablet {
+    @include min-width(md) {
+        @include max-width(lg) {
+            @content;
+        }
+    }
+}
+
+@mixin desktop {
+    @include min-width(lg) {
+        @content;
+    }
+}
