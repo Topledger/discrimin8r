@@ -1,7 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Page from "../components/Page";
 import useStore from "../store"; // Import the Zustand store
-import ReactJson from 'react-json-view'; // Import react-json-view
+import dynamic from 'next/dynamic'; // Import dynamic from Next.js
+
+// Dynamically import ReactJson with no SSR
+const ReactJson = dynamic(() => import('react-json-view'), { ssr: false });
 
 const SearchHeader = ({ value, onChange, onSearch }) => {
     return (
