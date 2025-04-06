@@ -1,0 +1,40 @@
+.counterWidget {
+    background-color: #ffffff;
+    /* Light background */
+    padding: 1.5rem;
+    border-radius: 8px;
+    //box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+    /* Tailwind shadow-sm equivalent */
+    /* Soft shadow */
+    text-align: center;
+    border: 1px solid #CCD8FF;
+    /* Match input border color */
+    /* Light border */
+    min-width: 200px;
+    /* Ensure minimum width */
+    flex: 1;
+    /* Allow flexing */
+}
+
+.counterTitle {
+    display: block;
+    /* Ensure block display */
+    font-size: 0.9rem;
+    color: #657082;
+    /* Match standard text color */
+    font-weight: 400;
+    white-space: normal;
+    /* Allow wrapping */
+    word-break: break-word;
+    line-height: 1.3;
+}
+
+.counterValue {
+    font-size: 1.4rem;
+    /* 32px - Larger value */
+    color: #111827;
+    /* Gray-900 */
+    font-weight: 600;
+    line-height: 1.1;
+    margin-bottom: 0.75rem;
+}

@@ -1,3 +1,4 @@
+/*
 @import "breakpoints.scss";
 
 .pageTitle {
@@ -28,8 +29,7 @@
 }
 
 .dashboardContainer {
-
-
+    padding: 0;
 
     :global {
         .tl-dashboards.public-dashboard-page {
@@ -86,28 +86,96 @@
                         .tile.body-container {
                             height: 100%;
                             width: 100%;
+                            display: flex;
+                            flex-direction: column;
 
                             &.widget-visualization {
-                                border-radius: 4px;
-                                background-color: var(--dashboard-widget-bg, white);
-                                box-shadow: none;
-                                //border: 1px solid var(--dashboard-widget-border, #e5e7eb);
+                                border-radius: 0.5rem;
+                                background-color: var(--dashboard-widget-bg, #ffffff);
+                                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.03);
+                                border: 1px solid var(--dashboard-widget-border, #f3f4f6);
                                 height: 100%;
                                 width: 100%;
+                                overflow: hidden;
 
                                 .widget-header {
                                     display: flex;
                                     justify-content: space-between;
                                     align-items: center;
-                                    padding: 1rem;
+                                    // padding: 0rem 0rem;
+                                    border-bottom: 1px solid var(--dashboard-widget-border, #f3f4f6);
 
                                     >div {
                                         margin-bottom: 0 !important;
                                     }
 
                                     .visualization-name {
-                                        color: var(--dashboard-widget-title-text-color, rgba(0, 0, 0, 0.8));
-                                        font-weight: 600;
+                                        color: var(--dashboard-widget-title-text-color, #4b5563);
+                                        font-weight: 500;
+                                        font-size: 0.9rem;
+                                        line-height: 1.2;
+                                    }
+                                }
+
+                                .widget-body,
+                                .tv-lightweight-charts,
+                                // Commenting out old generic value class selector
+                                // .counter-value,
+                                .table-responsive {
+                                    padding: 1rem;
+                                    flex-grow: 1;
+                                    min-height: 0;
+                                    // Add flex properties for counter centering
+                                    display: flex;
+                                    flex-direction: column;
+                                    align-items: center;
+                                    justify-content: center;
+                                    text-align: center;
+
+
+                                    // Styles based on the reference file for Counter Visualizations
+                                    .counter-visualization-content {
+                                        div.counter-visualization-value {
+                                            color: var(--dashboard-widget-counter-value-color, #1f2937) !important;
+                                            font-size: 24px !important;
+                                            font-weight: 600 !important;
+                                            line-height: 1.2 !important;
+                                            letter-spacing: 1%;
+                                            margin: 0 !important;
+                                        }
+
+                                        .counter-visualization-label {
+                                            color: var(--dashboard-widget-title-text-color, #6b7280) !important;
+                                            font-size: 14px !important;
+                                            font-weight: 500 !important;
+                                            line-height: 1.2 !important;
+                                            letter-spacing: 1%;
+                                            margin-top: 0.5rem !important;
+                                            white-space: normal !important;
+                                            word-break: break-word;
+                                        }
+                                    }
+
+                                    // Fallback if .counter-visualization-content wrapper isn't used,
+                                    // but the value/label classes are direct children of widget-body
+                                    >div.counter-visualization-value {
+                                        color: var(--dashboard-widget-counter-value-color, #1f2937) !important;
+                                        font-size: 24px;
+                                        font-weight: 600 !important;
+                                        line-height: 1.2 !important;
+                                        letter-spacing: 1%;
+                                        margin: 0 !important;
+                                    }
+
+                                    >.counter-visualization-label {
+                                        color: var(--dashboard-widget-title-text-color, #6b7280) !important;
+                                        font-size: 14px !important;
+                                        font-weight: 500 !important;
+                                        line-height: 1.2 !important;
+                                        letter-spacing: 1%;
+                                        margin-top: 0.5rem !important;
+                                        white-space: normal !important;
+                                        word-break: break-word;
                                     }
                                 }
                             }
@@ -115,30 +183,112 @@
                             &.widget-text {
                                 background-color: transparent;
                                 border: none;
-                                padding: 0;
+                                padding: 0rem 0rem;
                                 box-shadow: none;
                                 height: 100%;
                                 width: 100%;
+                                display: flex;
+                                flex-direction: column;
+                                justify-content: center;
+                                align-items: center;
 
                                 .markdown {
-                                    display: flex;
-                                    align-items: flex-end;
+                                    display: block;
                                     padding: 0 !important;
-                                    height: 100%;
-                                    width: 100%;
+                                    height: auto;
+                                    width: auto;
+                                    text-align: center;
 
-                                    h2 {
-                                        color: var(--dashboard-widget-title-text-color, rgba(0, 0, 0, 0.8));
-                                        font-size: 1.25rem;
+                                    /* Commenting out the old markdown title styling
+                                    h1,
+                                    h2,
+                                    h3,
+                                    h4,
+                                    h5,
+                                    h6,
+                                    p:first-child,
+                                    div:first-child>strong {
+                                        color: var(--dashboard-widget-title-text-color, #6b7280) !important;
+                                        font-size: 0.9rem !important;
+                                        font-weight: 500 !important;
+                                        margin-bottom: 0.25rem !important;
+                                        line-height: 1.2 !important;
+                                        white-space: normal !important;
+                                        word-break: break-word;
                                     }
+                                    */
+
+// More specific selector for markdown values
+/* Commenting out old markdown value attempts
+                                    &.widget-text .markdown p:not(:first-child),
+                                    &.widget-text .markdown span,
+                                    &.widget-text .markdown div:not(:first-child),
+                                    &.widget-text .markdown h1,
+                                    &.widget-text .markdown h3,
+                                    &.widget-text .markdown h4,
+                                    &.widget-text .markdown h5,
+                                    &.widget-text .markdown h6 {
+                                        &:not(h2) {
+                                            color: var(--dashboard-widget-value-text-color, #1f2937) !important;
+                                            font-size: 24px !important;
+                                            font-weight: 600 !important;
+                                            line-height: 1.2 !important;
+                                            margin: 0 !important;
+                                        }
+                                    }
+                                    */
+}
+}
+
+// Rule targeting common value classes directly within any tile body
+/* Commenting out old generic value rule
+                            .counter-value,
+                            .value,
+                            .metric {
+                                color: var(--dashboard-widget-value-text-color, #1f2937) !important;
+                                font-size: 24px !important;
+                                font-weight: 600 !important;
+                                line-height: 1.2 !important;
+                                margin: 0 !important;
+                            }
+                            */
+
+// Fallback for potentially untagged/unclassed values (e.g., simple <span> or <div>)
+/* Commenting out old fallback rules
+                            &.widget-text>span:not(:first-child),
+                            &.widget-text>div:not(:first-child),
+                            &.widget-text>p:not(:first-child) {
+                                color: var(--dashboard-widget-value-text-color, #1f2937) !important;
+                                font-size: 24px !important;
+                                font-weight: 600 !important;
+                                line-height: 1.2 !important;
+                                margin: 0 !important;
+                            }
+                            */
+
+// Specific fallback if value is inside a known container like widget-body
+/* Commenting out old fallback rules
+                            .widget-body span,
+                            .widget-body div,
+                            .widget-body p {
+
+                                // Attempt to target only elements likely to be values (e.g., no class, not first)
+                                &:not([class]):not(:first-child) {
+                                    // Less precise, might need adjustment
+                                    color: var(--dashboard-widget-value-text-color, #1f2937) !important;
+                                    font-size: 24px !important;
+                                    font-weight: 600 !important;
+                                    line-height: 1.2 !important;
+                                    margin: 0 !important;
                                 }
                             }
-                        }
-                    }
-                }
-            }
-        }
-    }
+                            */
+}
+}
+}
+}
+}
+}
 }
 
 @include mobile {
@@ -150,3 +300,5 @@
         padding: 0;
     }
 }
+
+*/
