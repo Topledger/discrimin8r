@@ -224,7 +224,11 @@ const WeeklyDeployedChartInternal = ({ data, width, height, margin = focusChartM
         // Add wrapper div with position: relative for tooltip context
         <div style={{ position: 'relative' }}>
             {/* Focus Chart SVG - Top margin applied via Group */}
-            <svg width={width} height={yMaxFocus + margin.top + margin.bottom}>
+            <svg
+                width={width}
+                height={yMaxFocus + margin.top + margin.bottom}
+                style={{ transition: 'width 300ms ease-in-out, height 300ms ease-in-out' }} // Add transition
+            >
                 <Group left={margin.left} top={margin.top}> {/* Group applies top/left margin */}
                     <GridRows scale={yScaleFocus} width={xMax} height={yMaxFocus} stroke="#e0e0e0" />
 
@@ -281,7 +285,11 @@ const WeeklyDeployedChartInternal = ({ data, width, height, margin = focusChartM
             </svg>
 
             {/* Context Chart SVG */}
-            <svg width={width} height={yMaxBrush + brushChartMargin.top + brushChartMargin.bottom}>
+            <svg
+                width={width}
+                height={yMaxBrush + brushChartMargin.top + brushChartMargin.bottom}
+                style={{ transition: 'width 300ms ease-in-out, height 300ms ease-in-out' }} // Add transition
+            >
                 <Group left={brushChartMargin.left} top={brushChartMargin.top}>
                     <LinearGradient id="brush-gradient" from={brushAreaColor} to={brushAreaColor} fromOpacity={0.4} toOpacity={0.1} />
                     <AreaClosed
