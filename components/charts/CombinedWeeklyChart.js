@@ -241,7 +241,11 @@ const CombinedWeeklyChartInternal = ({ data, width, height, margin = focusChartM
     return (
         <div style={{ position: 'relative' }}>
             {/* Focus Chart SVG */}
-            <svg width={width} height={yMaxFocus + margin.top + margin.bottom}>
+            <svg
+                width={width}
+                height={yMaxFocus + margin.top + margin.bottom}
+                style={{ transition: 'width 300ms ease-in-out, height 300ms ease-in-out' }}
+            >
                 <Group left={margin.left} top={margin.top}>
                     <GridRows scale={yCountScaleFocus} width={xMax} height={yMaxFocus} stroke="#e0e0e0" />
 
@@ -372,7 +376,11 @@ const CombinedWeeklyChartInternal = ({ data, width, height, margin = focusChartM
             </svg>
 
             {/* Context Chart SVG */}
-            <svg width={width} height={yMaxBrush + brushChartMargin.top + brushChartMargin.bottom}>
+            <svg
+                width={width}
+                height={yMaxBrush + brushChartMargin.top + brushChartMargin.bottom}
+                style={{ transition: 'width 300ms ease-in-out, height 300ms ease-in-out' }}
+            >
                 <Group left={brushChartMargin.left} top={brushChartMargin.top}>
                     <LinearGradient id="combined-brush-gradient" from={brushAreaColor} to={brushAreaColor} fromOpacity={0.4} toOpacity={0.1} />
                     <AreaClosed

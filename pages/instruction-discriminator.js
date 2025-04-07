@@ -160,16 +160,23 @@ function InstructionDiscriminator() {
         try {
             // If it's a string, try to parse it
             const idl = typeof idlJson === 'string' ? JSON.parse(idlJson) : idlJson;
+            let name = "Unknown";
 
             // Try to get the name from the IDL
-            if (idl.name) return idl.name;
-
+            if (idl.name) {
+                name = idl.name;
+            }
             // If no name, try to get the first instruction name
-            if (idl.instructions && idl.instructions.length > 0) {
-                return idl.instructions[0].name || "Unknown";
+            else if (idl.instructions && idl.instructions.length > 0 && idl.instructions[0].name) {
+                name = idl.instructions[0].name;
             }
 
-            return "Unknown";
+            // Replace underscores with spaces if a name was found
+            if (name !== "Unknown") {
+                return name.replace(/_/g, ' ');
+            }
+
+            return name; // Return "Unknown" if no name was found
         } catch (e) {
             return "Unknown";
         }
@@ -273,9 +280,12 @@ function InstructionDiscriminator() {
                             </div>
                             <div className="flex flex-col gap-4">
                                 {result.mapping_results.map((item, index) => (
-                                    <div key={index} className="flex flex-col gap-2 border border-[#CCD8FF] rounded overflow-hidden bg-[#F6F8FF] shadow-sm">
-                                        <div className="flex items-center gap-2 bg-white px-4 py-3">
-                                            <span className="text-[#657082] text-sm font-medium flex-1 tracking-wide font-mono">
+                                    <div key={index} className="flex flex-col gap-2 border border-[#CCD8FF] rounded overflow-hidden bg-[#F6F8FF] shadow-sm p-4">
+                                        <span className="text-[#657082] text-xs font-normal tracking-wide mb-1">
+                                            {getIDLName(item.idl_json)}
+                                        </span>
+                                        <div className="flex items-center gap-2 bg-white px-4 py-3 border border-[#CCD8FF] rounded shadow-sm">
+                                            <span className="text-[#657082] text-sm font-medium tracking-wide font-mono flex-1">
                                                 {item.program_address}
                                             </span>
                                             <div className="flex items-center gap-2">
@@ -331,13 +341,13 @@ function InstructionDiscriminator() {
                                             </div>
                                         </div>
                                         {expandedIdl[index] && item.idl_json && (
-                                            <div className="bg-[#F6F8FF] border-t border-[#CCD8FF]">
-                                                <div className="flex justify-between items-center px-4 py-2 bg-[#EAEFFF]">
+                                            <div className="bg-[#F6F8FF] border border-[#CCD8FF] rounded">
+                                                <div className="flex justify-between items-center rounded-t border-b border-[#CCD8FF] px-4 py-2 bg-[#fffFFF]">
                                                     <span className="text-[#657082] font-medium text-sm">IDL JSON</span>
                                                     <div className="flex items-center gap-2">
                                                         <button
                                                             onClick={() => handleCopyIdl(index)}
-                                                            className="p-2 hover:bg-white rounded transition-colors"
+                                                            className="p-2 hover:bg-[#EAEFFF] rounded transition-colors"
                                                             title="Copy IDL JSON"
                                                             aria-label="Copy IDL JSON"
                                                         >
@@ -375,7 +385,7 @@ function InstructionDiscriminator() {
                                                         </button>
                                                         <button
                                                             onClick={() => handleDownloadIdl(index)}
-                                                            className="p-2 hover:bg-white rounded transition-colors"
+                                                            className="p-2 hover:bg-[#EAEFFF] rounded transition-colors"
                                                             title="Download IDL JSON"
                                                             aria-label="Download IDL JSON"
                                                         >
@@ -398,7 +408,7 @@ function InstructionDiscriminator() {
                                                         </button>
                                                     </div>
                                                 </div>
-                                                <div className="bg-white p-4 max-h-96 overflow-auto text-xs">
+                                                <div className="bg-white p-4 max-h-96 rounded-b overflow-auto text-xs">
                                                     <ReactJson
                                                         src={typeof item.idl_json === 'string' ? JSON.parse(item.idl_json) : item.idl_json}
                                                         theme="rjv-default"
