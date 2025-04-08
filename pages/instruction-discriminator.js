@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Page from "../components/Page";
-import useStore from "../store"; // Import the Zustand store
-import dynamic from 'next/dynamic'; // Import dynamic from Next.js
+import useStore from "../store";
+import dynamic from 'next/dynamic';
 
 // Dynamically import ReactJson with no SSR
 const ReactJson = dynamic(() => import('react-json-view'), { ssr: false });
@@ -51,82 +51,86 @@ const SearchHeader = ({ value, onChange, onSearch }) => {
 };
 
 function InstructionDiscriminator() {
-    // Local state for transient UI states
+    // Local state
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
     const [copiedText, setCopiedText] = useState("");
-    const [copiedIdl, setCopiedIdl] = useState({}); // State for IDL copy confirmation by index
-    const [expandedIdl, setExpandedIdl] = useState({}); // State for expanded IDL sections
+    const [copiedIdl, setCopiedIdl] = useState({});
+    const [expandedIdl, setExpandedIdl] = useState({});
+    const [apiData, setApiData] = useState(null);
 
-    // Global state from Zustand
+    // Input state from store
     const instruction = useStore((state) => state.discriminatorInput);
     const setInstruction = useStore((state) => state.setDiscriminatorInput);
-    const result = useStore((state) => state.discriminatorResult);
-    const setResult = useStore((state) => state.setDiscriminatorResult);
 
+    // Simple fetch function
     const handleSearch = async () => {
         if (instruction.length < 2) return;
+
         setLoading(true);
         setError(null);
-        setResult(null);
+        setApiData(null);
+
         try {
-            const res = await fetch("https://apis.topledger.xyz/api/discriminator", {
+            const response = await fetch("https://apis.topledger.xyz/api/discriminator", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ ix_name: instruction })
             });
-            const data = await res.json();
 
-            if (!res.ok || data.error) {
-                throw new Error(data.error || `API Error: ${res.statusText}`);
+            const data = await response.json();
+
+            if (!response.ok || data.error) {
+                throw new Error(data.error || `API Error: ${response.statusText}`);
             }
 
             if (!data.discriminator) {
                 throw new Error("Discriminator not found for this instruction name.");
             }
 
-            // Transform the data to match our expected format
-            const transformedData = {
-                discriminator: data.discriminator,
-                mapping_results: data.mapping_results || []
-            };
+            // Store the raw API response
+            setApiData(data);
+            console.log("API response:", data); // For debugging
 
-            setResult(transformedData);
         } catch (err) {
             setError(err.message || "Error loading data");
-            setResult(null);
+        } finally {
+            setLoading(false);
         }
-        setLoading(false);
     };
 
     const handleCopy = (text) => {
         navigator.clipboard.writeText(text);
         setCopiedText(text);
-        setCopiedIdl({}); // Reset IDL copy state
+        setCopiedIdl({});
         setTimeout(() => setCopiedText(""), 1000);
     };
 
     const handleCopyIdl = (index) => {
-        if (!result?.mapping_results || !result.mapping_results[index]?.idl_json) return;
-        const idlString = typeof result.mapping_results[index].idl_json === 'string'
-            ? result.mapping_results[index].idl_json
-            : JSON.stringify(result.mapping_results[index].idl_json, null, 2);
+        if (!apiData?.mapping_results?.[index]?.idl_json) return;
+
+        const idlString = typeof apiData.mapping_results[index].idl_json === 'string'
+            ? apiData.mapping_results[index].idl_json
+            : JSON.stringify(apiData.mapping_results[index].idl_json, null, 2);
+
         navigator.clipboard.writeText(idlString);
         setCopiedIdl({ ...copiedIdl, [index]: true });
-        setCopiedText(""); // Reset other copy state
+        setCopiedText("");
         setTimeout(() => setCopiedIdl({ ...copiedIdl, [index]: false }), 1000);
     };
 
     const handleDownloadIdl = (index) => {
-        if (!result?.mapping_results || !result.mapping_results[index]?.idl_json) return;
-        const idlString = typeof result.mapping_results[index].idl_json === 'string'
-            ? result.mapping_results[index].idl_json
-            : JSON.stringify(result.mapping_results[index].idl_json, null, 2);
+        if (!apiData?.mapping_results?.[index]?.idl_json) return;
+
+        const idlString = typeof apiData.mapping_results[index].idl_json === 'string'
+            ? apiData.mapping_results[index].idl_json
+            : JSON.stringify(apiData.mapping_results[index].idl_json, null, 2);
+
         const blob = new Blob([idlString], { type: "application/json" });
         const url = URL.createObjectURL(blob);
         const a = document.createElement('a');
         a.href = url;
-        a.download = `${instruction || 'idl'}_${result.mapping_results[index].program_address}.json`; // Use instruction name and program address for filename
+        a.download = `${instruction || 'idl'}_${apiData.mapping_results[index].program_address}.json`;
         document.body.appendChild(a);
         a.click();
         document.body.removeChild(a);
@@ -140,43 +144,24 @@ function InstructionDiscriminator() {
         });
     };
 
-    const formatByteArray = (byteArray) => {
-        if (!byteArray || !Array.isArray(byteArray)) return "Invalid byte array";
-
-        // Format each byte as a two-digit hexadecimal number
-        const formattedBytes = byteArray.map(byte => {
-            // Convert to hex and ensure it's two digits
-            const hex = byte.toString(16).toUpperCase();
-            return hex.padStart(2, '0');
-        });
-
-        // Return as a properly formatted byte array string
-        return `[${formattedBytes.join(', ')}]`;
-    };
-
     const getIDLName = (idlJson) => {
         if (!idlJson) return "Unknown";
 
         try {
-            // If it's a string, try to parse it
             const idl = typeof idlJson === 'string' ? JSON.parse(idlJson) : idlJson;
             let name = "Unknown";
 
-            // Try to get the name from the IDL
             if (idl.name) {
                 name = idl.name;
-            }
-            // If no name, try to get the first instruction name
-            else if (idl.instructions && idl.instructions.length > 0 && idl.instructions[0].name) {
+            } else if (idl.instructions && idl.instructions.length > 0 && idl.instructions[0].name) {
                 name = idl.instructions[0].name;
             }
 
-            // Replace underscores with spaces if a name was found
             if (name !== "Unknown") {
                 return name.replace(/_/g, ' ');
             }
 
-            return name; // Return "Unknown" if no name was found
+            return name;
         } catch (e) {
             return "Unknown";
         }
@@ -190,6 +175,8 @@ function InstructionDiscriminator() {
                     onChange={setInstruction}
                     onSearch={handleSearch}
                 />
+
+                {/* Loading state */}
                 {loading && (
                     <div className="w-full flex items-center justify-center p-10">
                         <div className="flex items-center gap-2">
@@ -197,6 +184,8 @@ function InstructionDiscriminator() {
                         </div>
                     </div>
                 )}
+
+                {/* Error state */}
                 {error && (
                     <div className="w-full flex items-center justify-center p-10">
                         <div className="flex items-center gap-3 text-red-500 bg-red-50 px-6 py-4 rounded-lg">
@@ -207,7 +196,9 @@ function InstructionDiscriminator() {
                         </div>
                     </div>
                 )}
-                {result?.discriminator?.length === 0 && (
+
+                {/* Empty discriminator result */}
+                {apiData?.discriminator?.length === 0 && (
                     <div className="w-full flex items-center justify-center p-10">
                         <div className="flex items-center gap-3 text-red-500 bg-red-50 px-6 py-4 rounded-lg">
                             <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="#c96262">
@@ -217,22 +208,31 @@ function InstructionDiscriminator() {
                         </div>
                     </div>
                 )}
-                {result?.discriminator?.length > 0 && (
+
+                {/* Discriminator display */}
+                {apiData?.discriminator && apiData.discriminator.length > 0 && (
                     <div className="w-full max-w-2xl border border-[#CCD8FF] rounded p-8 bg-[#F6F8FF] shadow-sm">
                         <div className="flex flex-col gap-2">
                             <span className="text-[#657082] font-medium text-sm">Discriminator</span>
                             <div className="flex items-center gap-2 bg-white border border-[#CCD8FF] px-4 py-3 rounded shadow-sm">
                                 <span className="text-[#657082] text-sm font-medium flex-1 tracking-wide font-mono">
-                                    {formatByteArray(result.discriminator)}
+                                    {/* Display discriminator array with commas between values */}
+                                    {apiData.discriminator && Array.isArray(apiData.discriminator)
+                                        ? `[${apiData.discriminator.join(', ')}]`
+                                        : apiData.discriminator}
                                 </span>
                                 <div className="flex items-center gap-2">
                                     <button
-                                        onClick={() => handleCopy(formatByteArray(result.discriminator))}
+                                        onClick={() => handleCopy(apiData.discriminator && Array.isArray(apiData.discriminator)
+                                            ? `[${apiData.discriminator.join(', ')}]`
+                                            : apiData.discriminator)}
                                         className="p-2 hover:bg-[#EAEFFF] rounded transition-colors"
                                         title="Copy to clipboard"
                                         aria-label="Copy discriminator"
                                     >
-                                        {copiedText === formatByteArray(result.discriminator) ? (
+                                        {copiedText === (apiData.discriminator && Array.isArray(apiData.discriminator)
+                                            ? `[${apiData.discriminator.join(', ')}]`
+                                            : apiData.discriminator) ? (
                                             <svg
                                                 xmlns="http://www.w3.org/2000/svg"
                                                 width="18"
@@ -269,17 +269,19 @@ function InstructionDiscriminator() {
                         </div>
                     </div>
                 )}
-                {result?.mapping_results?.length > 0 && (
+
+                {/* Program details */}
+                {apiData?.mapping_results?.length > 0 && (
                     <div className="w-full max-w-2xl border border-[#CCD8FF] rounded p-8 bg-[#F6F8FF] shadow-sm">
                         <div className="flex flex-col gap-4">
                             <div className="flex justify-between items-center">
                                 <span className="text-[#657082] font-medium text-sm">Program Details</span>
                                 <span className="text-[#657082] text-sm">
-                                    {result.mapping_results.length} {result.mapping_results.length === 1 ? 'program' : 'programs'}
+                                    {apiData.mapping_results.length} {apiData.mapping_results.length === 1 ? 'program' : 'programs'}
                                 </span>
                             </div>
                             <div className="flex flex-col gap-4">
-                                {result.mapping_results.map((item, index) => (
+                                {apiData.mapping_results.map((item, index) => (
                                     <div key={index} className="flex flex-col gap-2 border border-[#CCD8FF] rounded overflow-hidden bg-[#F6F8FF] shadow-sm p-4">
                                         <span className="text-[#657082] text-xs font-normal tracking-wide mb-1">
                                             {getIDLName(item.idl_json)}
