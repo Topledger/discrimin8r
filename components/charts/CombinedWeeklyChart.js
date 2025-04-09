@@ -11,7 +11,7 @@ import { ParentSize } from '@visx/responsive';
 import { Brush } from '@visx/brush';
 import { extent } from 'd3-array';
 import { LinearGradient } from '@visx/gradient';
-import { FiMaximize2, FiMinimize2 } from 'react-icons/fi';
+import { FiMaximize2, FiMinimize2, FiDownload } from 'react-icons/fi';
 import styles from '../../styles/Chart.module.scss';
 import Modal from 'react-modal';
 import { FiX } from 'react-icons/fi';
@@ -505,6 +505,41 @@ const CombinedWeeklyChart = ({
     const modalChartContainerStyle = { flexGrow: 1, overflow: 'hidden', position: 'relative' };
     // ---
 
+    // Handle CSV Download
+    const handleDownloadCSV = useCallback(() => {
+        if (!data || data.length === 0) return;
+
+        // Define CSV headers
+        const headers = ['Date', 'Week', 'Total Deployed', 'Deployed with Anchor', '% Deployed with Anchor'];
+
+        // Convert data to CSV rows
+        const csvRows = [
+            headers.join(','), // Headers row
+            ...data.map(row => {
+                return [
+                    row.week,                          // Date in YYYY-MM-DD format
+                    formatDate(parseDate(row.week)),   // Formatted date as Month-Year
+                    row.total_deployed,                // Total deployed count
+                    row.deployed_with_anchor,          // Deployed with Anchor
+                    row['%deployed_with_anchor']       // Percentage with Anchor
+                ].join(',');
+            })
+        ];
+
+        // Join rows with newlines to create CSV content
+        const csvContent = csvRows.join('\n');
+
+        // Create and trigger download
+        const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.setAttribute('href', url);
+        link.setAttribute('download', 'weekly_deployment_analysis.csv');
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    }, [data]);
+
     // State for legend muting
     const [mutedSeries, setMutedSeries] = useState([]);
     const handleLegendClick = useCallback((label) => {
@@ -528,10 +563,24 @@ const CombinedWeeklyChart = ({
             {/* Header */}
             <div className={styles.chartHeader}>
                 <h3 className={styles.chartTitle}>Weekly Deployment Analysis</h3>
-                {/* Button opens LOCAL modal */}
-                <button onClick={openLocalModal} className={styles.expandButton}>
-                    <FiMaximize2 />
-                </button>
+                <div className="flex items-center gap-2">
+                    {/* Download CSV Button */}
+                    <button
+                        onClick={handleDownloadCSV}
+                        className={styles.expandButton}
+                        title="Download CSV"
+                    >
+                        <FiDownload />
+                    </button>
+                    {/* Button opens LOCAL modal */}
+                    <button
+                        onClick={openLocalModal}
+                        className={styles.expandButton}
+                        title="Expand Chart"
+                    >
+                        <FiMaximize2 />
+                    </button>
+                </div>
             </div>
 
             {/* Chart Area (Normal view) */}
