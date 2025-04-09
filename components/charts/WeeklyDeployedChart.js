@@ -413,7 +413,7 @@ const WeeklyDeployedChart = ({
         if (!data || data.length === 0) return;
 
         // Define CSV headers
-        const headers = ['Date', 'Week', 'Total Deployed'];
+        const headers = ['Date', 'Total Deployed'];
 
         // Convert data to CSV rows
         const csvRows = [
@@ -421,7 +421,6 @@ const WeeklyDeployedChart = ({
             ...data.map(row => {
                 return [
                     row.week,                    // Date in YYYY-MM-DD format
-                    formatDate(parseDate(row.week)), // Formatted date as Month-Year
                     row.total_deployed          // Total deployed count
                 ].join(',');
             })

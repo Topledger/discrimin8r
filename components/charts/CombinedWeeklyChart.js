@@ -510,7 +510,7 @@ const CombinedWeeklyChart = ({
         if (!data || data.length === 0) return;
 
         // Define CSV headers
-        const headers = ['Date', 'Week', 'Total Deployed', 'Deployed with Anchor', '% Deployed with Anchor'];
+        const headers = ['Date', 'Total Deployed', 'Deployed with Anchor', '% Deployed with Anchor'];
 
         // Convert data to CSV rows
         const csvRows = [
@@ -518,7 +518,6 @@ const CombinedWeeklyChart = ({
             ...data.map(row => {
                 return [
                     row.week,                          // Date in YYYY-MM-DD format
-                    formatDate(parseDate(row.week)),   // Formatted date as Month-Year
                     row.total_deployed,                // Total deployed count
                     row.deployed_with_anchor,          // Deployed with Anchor
                     row['%deployed_with_anchor']       // Percentage with Anchor
