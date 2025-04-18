@@ -32,7 +32,7 @@ const menuItems = [
         )
     },
     {
-        name: 'Ix Discriminator',
+        name: 'Search by Instruction',
         path: '/instruction-discriminator',
         icon: (
             <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5">
