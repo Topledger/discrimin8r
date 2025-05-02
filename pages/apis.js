@@ -11,7 +11,7 @@ const API_LIST = [
         endpoint: "/api/instruction",
         baseUrl: "https://apis.topledger.xyz",
         description: "Get human readable name of Instruction from a base58 encoded instruction string.",
-        longDescription: "This endpoint allows you to decode a base58 encoded instruction string and retrieve its human-readable name. Useful for debugging, analytics, and program introspection.",
+        longDescription: "This endpoint allows you to decode a base58 encoded instruction string and retrieve its human-readable name. Useful for debugging, analytics, and program inspection.",
         samples: {
             curl: `curl --location --request POST 'https://apis.topledger.xyz/api/instruction' \
 -H 'Content-Type: application/json' \
@@ -136,55 +136,56 @@ function ApiInfoModal({ open, onClose, api, tab, setTab, onCopy, copied }) {
                 </button>
                 <h2 className="text-lg font-medium text-[#576EB7] mb-4">{api.name}</h2>
                 <div className="text-[#657082] text-[14px] mb-4">{api.longDescription}</div>
-                <div className="flex gap-0 border-b border-[#CCD8FF] bg-white mb-0 px-2 pt-2 rounded-t-lg items-center justify-between">
-                    <div className=" gap-0">
-                        {tabList.map(t => (
-                            <button
-                                key={t.key}
-                                onClick={() => setTab(t.key)}
-                                className={`px-4 py-2 font-mono text-sm focus:outline-none transition-all border-b-2 ${tab === t.key ? 'text-[#6DD6A7] font-bold border-[#6DD6A7] bg-white' : 'text-[#A3AED0] border-transparent bg-white'} `}
-                                style={{ borderRadius: 0 }}
-                            >
-                                {t.label}
-                            </button>
-                        ))}
-                    </div>
-                    <button onClick={() => onCopy(api.samples[tab])} className="p-2 hover:bg-[#EAEFFF] rounded transition-colors ml-2" title="Copy code sample">
-                        {copied === api.samples[tab] ? (
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                width="18"
-                                height="18"
-                                viewBox="0 0 24 24"
-                                fill="none"
-                                stroke="#6DD6A7"
-                                className="text-[#6DD6A7]"
-                            >
-                                <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    strokeWidth="2"
-                                    d="M5 13l4 4L19 7"
-                                />
-                            </svg>
-                        ) : (
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                width="18"
-                                height="18"
-                                viewBox="0 0 24 24"
-                                fill="none"
-                                stroke="#657082"
-                                className="text-[#A3AED0]"
-                            >
-                                <rect x="8" y="8" width="12" height="12" rx="2" ry="2" />
-                                <path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2" />
-                            </svg>
-                        )}
-                    </button>
-                </div>
                 <div className="rounded-[8px] overflow-hidden bg-[#23272F] mt-2">
-                    <div className="px-6 pb-6 pt-4 bg-[#23272F]">
+                    <div className="px-4 pt-2 bg-[#23272F]">
+                        <div className="flex items-center gap-4 mb-1">
+                            {tabList.map(t => (
+                                <button
+                                    key={t.key}
+                                    onClick={() => setTab(t.key)}
+                                    className={`px-0 py-0 font-mono text-xs focus:outline-none transition-all border-none shadow-none bg-transparent ${tab === t.key ? 'text-[#6DD6A7] font-bold' : 'text-[#A3AED0]'}`}
+                                    style={{ borderRadius: 0 }}
+                                >
+                                    {t.label}
+                                </button>
+                            ))}
+                            <button onClick={() => onCopy(api.samples[tab])} className="ml-auto p-2 hover:bg-[#353945] rounded transition-colors" title="Copy code sample">
+                                {copied === api.samples[tab] ? (
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        width="18"
+                                        height="18"
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        stroke="#6DD6A7"
+                                        className="text-[#6DD6A7]"
+                                    >
+                                        <path
+                                            strokeLinecap="round"
+                                            strokeLinejoin="round"
+                                            strokeWidth="2"
+                                            d="M5 13l4 4L19 7"
+                                        />
+                                    </svg>
+                                ) : (
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        width="18"
+                                        height="18"
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        stroke="#657082"
+                                        className="text-[#657082]"
+                                    >
+                                        <rect x="8" y="8" width="12" height="12" rx="2" ry="2" />
+                                        <path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2" />
+                                    </svg>
+                                )}
+                            </button>
+                        </div>
+                        <div className="border-b border-[#353945] w-full mb-4" />
+                    </div>
+                    <div className="px-6 pb-6 bg-[#23272F]">
                         <div className="flex items-start gap-2 h-[220px] min-h-[220px]">
                             <pre className={`flex-1 text-xs font-mono whitespace-pre-wrap break-all bg-transparent text-[#f8f8f2] overflow-auto h-full ${tab === 'curl' || tab === 'python' ? 'leading-6' : ''}`} style={tab === 'curl' || tab === 'python' ? { margin: 0, lineHeight: '1.6' } : { margin: 0 }}>
                                 <code dangerouslySetInnerHTML={{ __html: getHighlighted(api.samples[tab], langMap[tab]) }} />
