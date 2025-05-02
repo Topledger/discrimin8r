@@ -12,6 +12,9 @@ const API_LIST = [
         baseUrl: "https://apis.topledger.xyz",
         description: "Get human readable name of Instruction from a base58 encoded instruction string.",
         longDescription: "This endpoint allows you to decode a base58 encoded instruction string and retrieve its human-readable name. Useful for debugging, analytics, and program inspection.",
+        responseExample: `{
+  "ix_name": "InstantCreateTpsl"
+}`,
         samples: {
             curl: `curl --location --request POST 'https://apis.topledger.xyz/api/instruction' \
 -H 'Content-Type: application/json' \
@@ -26,6 +29,19 @@ const API_LIST = [
         baseUrl: "https://apis.topledger.xyz",
         description: "Get bytes array of discriminator for an Instruction Name.",
         longDescription: "This endpoint returns the byte array discriminator for a given instruction name. Discriminators are used to uniquely identify instructions in Anchor-based Solana programs.",
+        responseExample: `{
+  "discriminator": [117, 98, 66, 127, 30, 50, 73, 185],
+  "mapping_results": [
+    {
+      "program_address": "SomeProgramAddress11111111111111111111111111111111",
+      "idl_json": { /* ...IDL JSON... */ }
+    },
+    {
+      "program_address": "AnotherProgramAddress22222222222222222222222222222222",
+      "idl_json": { /* ...IDL JSON... */ }
+    }
+  ]
+}`,
         samples: {
             curl: `curl --location --request POST 'https://apis.topledger.xyz/api/discriminator' \
 -H 'Content-Type: application/json' \
@@ -40,6 +56,11 @@ const API_LIST = [
         baseUrl: "https://apis.topledger.xyz",
         description: "Validate any IDL file for a given dapp_address & a block_slot number.",
         longDescription: "This endpoint lets you validate an Interface Definition Language (IDL) file for a specific dapp address and block slot. It helps ensure your IDL matches the deployed program and can be used for verification and auditing.",
+        responseExample: `{
+  "success": true,
+  "error": null,
+  "data": [ ... ]
+}`,
         samples: {
             curl: `curl --location --request POST 'https://apis.topledger.xyz/api/verify-idl' \
 -H 'Content-Type: application/json' \
@@ -186,10 +207,19 @@ function ApiInfoModal({ open, onClose, api, tab, setTab, onCopy, copied }) {
                         <div className="border-b border-[#353945] w-full mb-4" />
                     </div>
                     <div className="px-6 pb-6 bg-[#23272F]">
-                        <div className="flex items-start gap-2 h-[220px] min-h-[220px]">
+                        <div className="flex items-start gap-2 h-[220px] min-h-[240px]">
                             <pre className={`flex-1 text-xs font-mono whitespace-pre-wrap break-all bg-transparent text-[#f8f8f2] overflow-auto h-full ${tab === 'curl' || tab === 'python' ? 'leading-6' : ''}`} style={tab === 'curl' || tab === 'python' ? { margin: 0, lineHeight: '1.6' } : { margin: 0 }}>
                                 <code dangerouslySetInnerHTML={{ __html: getHighlighted(api.samples[tab], langMap[tab]) }} />
                             </pre>
+                        </div>
+                    </div>
+                </div>
+                {/* Response label and container below codeblock */}
+                <div className="mt-4 px-0">
+                    <div className="text-[#A3AED0] text-sm mb-2 font-medium">Response</div>
+                    <div className="rounded-[8px] overflow-hidden bg-[#23272F]">
+                        <div className="px-6 pb-6 pt-4 bg-[#23272F] h-[120px] min-h-[120px]">
+                            <pre className="minimal-scrollbar text-xs font-mono text-[#f8f8f2] whitespace-pre-wrap break-all bg-transparent m-0 leading-6 h-full overflow-auto">{api.responseExample}</pre>
                         </div>
                     </div>
                 </div>
@@ -227,7 +257,7 @@ function APIs() {
 
     return (
         <Page title="Explore APIs" subtitle="Explore, test, and integrate with Solana program APIs." >
-            <div className="w-full min-h-screen p-0">
+            <div className="w-full p-0">
                 {/* API Cards */}
                 <div className="px-0 pb-0 pt-2">
                     <div className="flex flex-col gap-5">

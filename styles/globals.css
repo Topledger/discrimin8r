@@ -120,13 +120,13 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-    background: #c1c1c1;
+    background: #353945;
     /* Slightly darker grey thumb */
     border-radius: 3px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background: #a1a1a1;
+    background: #353945;
     /* Darker grey thumb on hover */
 }
 
@@ -136,4 +136,24 @@ html {
     /* "auto" or "thin" */
     scrollbar-color: #c1c1c1 #f1f1f1;
     /* thumb and track color */
+}
+
+/* Minimal dark mode scrollbar for code/response blocks */
+.minimal-scrollbar::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+.minimal-scrollbar::-webkit-scrollbar-thumb {
+    background: #444857;
+    border-radius: 6px;
+}
+
+.minimal-scrollbar::-webkit-scrollbar-track {
+    background: #23272F;
+}
+
+.minimal-scrollbar {
+    scrollbar-width: thin;
+    scrollbar-color: #444857 #23272F;
 }
