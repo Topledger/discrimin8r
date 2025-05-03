@@ -22,7 +22,7 @@ const PageHeader = ({ title, subtitle, searchValue, onSearchChange, showSearch, 
                         )}
                     </div>
                     {subtitle && (
-                        <p className="text-[#657082] max-w-2xl text-sm leading-relaxed mt-0.5 whitespace-nowrap overflow-hidden text-ellipsis">
+                        <p className="text-[#657082]  text-sm leading-relaxed mt-0.5 whitespace-nowrap overflow-hidden">
                             {subtitle}
                         </p>
                     )}

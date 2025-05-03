@@ -28,7 +28,7 @@ const API_LIST = [
         endpoint: "/api/discriminator",
         baseUrl: "https://apis.topledger.xyz",
         description: "Get bytes array of discriminator for an Instruction Name.",
-        longDescription: "This endpoint returns the byte array discriminator for a given instruction name. Discriminators are used to uniquely identify instructions in Anchor-based Solana programs.",
+        longDescription: "This endpoint returns the 8-byte discriminator for a specified instruction name, along with a list of the IDLs and their associated program addresses where that instruction is defined.",
         responseExample: `{
   "discriminator": [117, 98, 66, 127, 30, 50, 73, 185],
   "mapping_results": [
@@ -235,7 +235,7 @@ function APIs() {
     const [selectedApi, setSelectedApi] = useState(null);
     const [infoModalOpen, setInfoModalOpen] = useState(false);
     const [infoApi, setInfoApi] = useState(null);
-    const [tab, setTab] = useState('curl');
+    const [tab, setTab] = useState('python');
     const filtered = API_LIST.filter(api => api.name.toLowerCase().includes(search.toLowerCase()));
 
     const handleCopy = (text) => {
@@ -251,12 +251,12 @@ function APIs() {
 
     const openInfoModal = (api) => {
         setInfoApi(api);
-        setTab('curl');
+        setTab('python');
         setInfoModalOpen(true);
     };
 
     return (
-        <Page title="Explore APIs" subtitle="Explore, test, and integrate with Solana program APIs." >
+        <Page title="Access Discriminator using API end points" subtitle="Explore, test and integrate discriminator with your Solana programs or DAPPs using our open source and maintained APIs" >
             <div className="w-full p-0">
                 {/* API Cards */}
                 <div className="px-0 pb-0 pt-2">
