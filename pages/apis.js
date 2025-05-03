@@ -13,7 +13,8 @@ const API_LIST = [
         description: "Get human readable name of Instruction from a base58 encoded instruction string.",
         longDescription: "This endpoint allows you to decode a base58 encoded instruction string and retrieve its human-readable name. Useful for debugging, analytics, and program inspection.",
         responseExample: `{
-  "ix_name": "InstantCreateTpsl"
+    "name": "instantCreateTpsl",
+    "program_addresses": ["PERPHjGBqRHArX4DySjwM6UJHiR3sWAatqfdBS2qQJu"]
 }`,
         samples: {
             curl: `curl --location --request POST 'https://apis.topledger.xyz/api/instruction' \
