@@ -273,7 +273,7 @@ function InstructionDiscriminator() {
                 {/* Program details */}
                 {apiData?.mapping_results?.length > 0 && (
                     <div className="w-full max-w-2xl border border-[#CCD8FF] rounded p-8 bg-[#F6F8FF] shadow-sm">
-                        <div className="flex flex-col gap-4">
+                        <div className="flex flex-col gap-6">
                             <div className="flex justify-between items-center">
                                 <span className="text-[#657082] font-medium text-sm">Program Details</span>
                                 <span className="text-[#657082] text-sm">
@@ -282,10 +282,8 @@ function InstructionDiscriminator() {
                             </div>
                             <div className="flex flex-col gap-4">
                                 {apiData.mapping_results.map((item, index) => (
-                                    <div key={index} className="flex flex-col gap-2 border border-[#CCD8FF] rounded overflow-hidden bg-[#F6F8FF] shadow-sm p-4">
-                                        <span className="text-[#657082] text-xs font-normal tracking-wide mb-1">
-                                            {getIDLName(item.idl_json)}
-                                        </span>
+                                    <div key={index} className="flex flex-col gap-0  overflow-hidden bg-[#F6F8FF] p-2">
+
                                         <div className="flex items-center gap-2 bg-white px-4 py-3 border border-[#CCD8FF] rounded shadow-sm">
                                             <span className="text-[#657082] text-sm font-medium tracking-wide font-mono flex-1">
                                                 {item.program_address}

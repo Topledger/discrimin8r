@@ -46,9 +46,9 @@ const API_LIST = [
         samples: {
             curl: `curl --location --request POST 'https://apis.topledger.xyz/api/discriminator' \
 -H 'Content-Type: application/json' \
---data-raw '{"ix_name":"InstantCreateTpsl"}'`,
-            python: `import requests\n\nresponse = requests.post(\n    'https://apis.topledger.xyz/api/discriminator',\n    headers={'Content-Type': 'application/json'},\n    json={\n        'ix_name': 'InstantCreateTpsl'\n    }\n)\ndata = response.json()`,
-            js: `const response = await fetch('https://apis.topledger.xyz/api/discriminator', {\n    method: 'POST',\n    headers: {\n        'Content-Type': 'application/json'\n    },\n    body: JSON.stringify({\n        ix_name: 'InstantCreateTpsl'\n    })\n});\nconst data = await response.json();`
+--data-raw '{"ix_name":"instantCreateTpsl"}'`,
+            python: `import requests\n\nresponse = requests.post(\n    'https://apis.topledger.xyz/api/discriminator',\n    headers={'Content-Type': 'application/json'},\n    json={\n        'ix_name': 'instantCreateTpsl'\n    }\n)\ndata = response.json()`,
+            js: `const response = await fetch('https://apis.topledger.xyz/api/discriminator', {\n    method: 'POST',\n    headers: {\n        'Content-Type': 'application/json'\n    },\n    body: JSON.stringify({\n        ix_name: 'instantCreateTpsl'\n    })\n});\nconst data = await response.json();`
         }
     },
     {
