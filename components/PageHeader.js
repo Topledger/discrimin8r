@@ -1,6 +1,6 @@
 import React from 'react';
 
-const PageHeader = ({ title, subtitle, searchValue, onSearchChange, showSearch, breadcrumb, onBreadcrumbClick }) => {
+const PageHeader = ({ title, subtitle, searchValue, onSearchChange, showSearch, breadcrumb, onBreadcrumbClick, hideHorizontalLine }) => {
     return (
         <div className="flex flex-col gap-4 mb-6">
             <div className="flex items-center justify-between">
@@ -55,7 +55,7 @@ const PageHeader = ({ title, subtitle, searchValue, onSearchChange, showSearch, 
                     </div>
                 )}
             </div>
-            <div className="h-px bg-[#CCD8FF]"></div>
+            {!hideHorizontalLine && <div className="h-px bg-[#CCD8FF]"></div>}
         </div>
     );
 };

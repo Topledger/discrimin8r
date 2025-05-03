@@ -6,7 +6,7 @@ import { useState, useEffect } from "react";
 import React from "react";
 import MobileView from "./MobileView";
 
-const Page = ({ title, subtitle, children, searchValue, onSearchChange, showSearch, breadcrumb, onBreadcrumbClick }) => {
+const Page = ({ title, subtitle, children, searchValue, onSearchChange, showSearch, breadcrumb, onBreadcrumbClick, hideHorizontalLine }) => {
     const [isCollapsed, setIsCollapsed] = useState(false);
     const [isTransitioning, setIsTransitioning] = useState(false);
     const [hydrated, setHydrated] = useState(false);
@@ -82,6 +82,7 @@ const Page = ({ title, subtitle, children, searchValue, onSearchChange, showSear
                             showSearch={showSearch}
                             breadcrumb={breadcrumb}
                             onBreadcrumbClick={onBreadcrumbClick}
+                            hideHorizontalLine={hideHorizontalLine}
                         />
                         {React.Children.map(children, child =>
                             React.isValidElement(child) && typeof child.type === 'function'
