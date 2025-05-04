@@ -209,7 +209,7 @@ function ApiInfoModal({ open, onClose, api, tab, setTab, onCopy, copied }) {
                     </div>
                     <div className="px-6 pb-6 bg-[#23272F]">
                         <div className="flex items-start gap-2 h-[220px] min-h-[240px]">
-                            <pre className={`flex-1 text-xs font-mono whitespace-pre-wrap break-all bg-transparent text-[#f8f8f2] overflow-auto h-full ${tab === 'curl' || tab === 'python' ? 'leading-6' : ''}`} style={tab === 'curl' || tab === 'python' ? { margin: 0, lineHeight: '1.6' } : { margin: 0 }}>
+                            <pre className={`flex-1 text-xs font-mono whitespace-pre-wrap break-all bg-transparent text-[#f8f8f2] overflow-auto h-full minimal-scrollbar ${tab === 'curl' || tab === 'python' ? 'leading-6' : ''}`} style={tab === 'curl' || tab === 'python' ? { margin: 0, lineHeight: '1.6' } : { margin: 0 }}>
                                 <code dangerouslySetInnerHTML={{ __html: getHighlighted(api.samples[tab], langMap[tab]) }} />
                             </pre>
                         </div>
@@ -217,7 +217,7 @@ function ApiInfoModal({ open, onClose, api, tab, setTab, onCopy, copied }) {
                 </div>
                 {/* Response label and container below codeblock */}
                 <div className="mt-4 px-0">
-                    <div className="text-[#A3AED0] text-sm mb-2 font-medium">Response</div>
+                    <div className="text-[#374151] text-sm mb-2 font-medium">Response</div>
                     <div className="rounded-[8px] overflow-hidden bg-[#23272F]">
                         <div className="px-6 pb-6 pt-4 bg-[#23272F] h-[120px] min-h-[120px]">
                             <pre className="minimal-scrollbar text-xs font-mono text-[#f8f8f2] whitespace-pre-wrap break-all bg-transparent m-0 leading-6 h-full overflow-auto">{api.responseExample}</pre>

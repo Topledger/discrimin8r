@@ -220,10 +220,10 @@ const Help = () => {
 
                             {section.videoId && (
                                 <div className="mt-6 mb-2 mx-auto w-full max-w-[800px]">
-                                    <div className="relative pb-[40%] h-0 overflow-hidden rounded-lg border border-[#CCD8FF] shadow-md bg-white">
+                                    <div className="relative pb-[40%] h-0 overflow-hidden rounded-sm border border-[#CCD8FF] shadow-sm bg-white">
 
                                         <iframe
-                                            className="absolute top-0 left-0 w-full h-[calc(100%-2rem)]"
+                                            className="absolute top-0 left-0 w-full h-[calc(100%)]"
                                             src={`https://www.youtube.com/embed/${section.videoId}`}
                                             title={`${section.title} video tutorial`}
                                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
