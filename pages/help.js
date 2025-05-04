@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Page from "../components/Page";
 import Prism from "prismjs";
 import "prismjs/themes/prism-tomorrow.css";
@@ -54,7 +54,8 @@ instantly see its human-readable Anchor instruction name and corresponding progr
 1. Provide a dApp address for the program you want to verify
 2. Specify a block slot
 3. Upload the IDL you want to validate
-4. Discrimin8r will parse instructions to validate if the IDL matches the program's actual on-chain behavior.`,
+
+Discrimin8r will parse instructions to validate if the IDL matches the program's actual on-chain behavior.`,
         videoId: 'Vlyu9hpajAs'
     }
 ];
@@ -62,21 +63,124 @@ instantly see its human-readable Anchor instruction name and corresponding progr
 const Help = () => {
     const [activeSection, setActiveSection] = useState('introduction');
     const [activeCodeTab, setActiveCodeTab] = useState('javascript');
+    const observerRef = useRef(null);
+    const sectionRefs = useRef({});
 
+    // Initialize Prism for syntax highlighting
     useEffect(() => {
-        // Initialize Prism for syntax highlighting
         if (typeof window !== 'undefined') {
             Prism.highlightAll();
         }
     }, [activeSection, activeCodeTab]);
+
+    // Setup Intersection Observer to detect which section is in view
+    useEffect(() => {
+        if (typeof window === 'undefined') return;
+
+        // Slightly delay observer setup to ensure all elements are rendered
+        setTimeout(() => {
+            // Intersection Observer options
+            const options = {
+                root: null, // viewport
+                rootMargin: '0px 0px -80% 0px', // Only trigger when section is at the top of the viewport
+                threshold: 0.15 // Require more visibility
+            };
+
+            // Callback function when sections intersect viewport
+            const handleIntersect = (entries) => {
+                // Filter only intersecting entries and sort by their Y position in the viewport
+                const visibleEntries = entries
+                    .filter(entry => entry.isIntersecting)
+                    .sort((a, b) => {
+                        const rectA = a.boundingClientRect;
+                        const rectB = b.boundingClientRect;
+                        return rectA.top - rectB.top;
+                    });
+
+                // Use the topmost visible section
+                if (visibleEntries.length > 0) {
+                    setActiveSection(visibleEntries[0].target.id);
+                }
+            };
+
+            // Create observer
+            observerRef.current = new IntersectionObserver(handleIntersect, options);
+
+            // Observe all section elements
+            helpSections.forEach(section => {
+                const element = document.getElementById(section.id);
+                if (element) {
+                    observerRef.current.observe(element);
+                    sectionRefs.current[section.id] = element;
+                }
+            });
+        }, 100);
+
+        // Cleanup on component unmount
+        return () => {
+            if (observerRef.current) {
+                observerRef.current.disconnect();
+            }
+        };
+    }, []);
+
+    // Improved scroll event listener with debouncing
+    useEffect(() => {
+        if (typeof window === 'undefined') return;
+
+        let scrollTimeout;
+        const handleScroll = () => {
+            // Clear previous timeout
+            if (scrollTimeout) {
+                clearTimeout(scrollTimeout);
+            }
+
+            // Set a small delay to avoid rapid updates
+            scrollTimeout = setTimeout(() => {
+                // Account for header and some spacing
+                const scrollPosition = window.scrollY + 150;
+
+                // Loop through sections in reverse (bottom to top)
+                // This helps ensure we catch the section that's most prominently in view
+                for (let i = helpSections.length - 1; i >= 0; i--) {
+                    const section = helpSections[i];
+                    const element = document.getElementById(section.id);
+
+                    if (element) {
+                        const { offsetTop } = element;
+
+                        // More lenient check - if we've scrolled past the start of the section
+                        if (scrollPosition >= offsetTop) {
+                            if (activeSection !== section.id) {
+                                setActiveSection(section.id);
+                            }
+                            break; // Stop checking once we find a match
+                        }
+                    }
+                }
+            }, 50);
+        };
+
+        // Add scroll event listener
+        window.addEventListener('scroll', handleScroll);
+
+        // Initial check
+        handleScroll();
+
+        // Cleanup
+        return () => {
+            window.removeEventListener('scroll', handleScroll);
+            if (scrollTimeout) {
+                clearTimeout(scrollTimeout);
+            }
+        };
+    }, [activeSection]);
 
     return (
         <Page
             title="Help"
             subtitle="Learn how to use Discrimin8r effectively"
         >
-
-
             <div className="flex flex-col md:flex-row gap-8">
                 {/* Main Content */}
                 <div className="flex-1">
@@ -115,10 +219,11 @@ const Help = () => {
                             </div>
 
                             {section.videoId && (
-                                <div className="mt-6 mb-2 mx-auto w-full max-w-[800px]" >
+                                <div className="mt-6 mb-2 mx-auto w-full max-w-[800px]">
                                     <div className="relative pb-[40%] h-0 overflow-hidden rounded-lg border border-[#CCD8FF] shadow-md bg-white">
+
                                         <iframe
-                                            className="absolute top-0 left-0 w-full h-full"
+                                            className="absolute top-0 left-0 w-full h-[calc(100%-2rem)]"
                                             src={`https://www.youtube.com/embed/${section.videoId}`}
                                             title={`${section.title} video tutorial`}
                                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
@@ -176,7 +281,6 @@ const Help = () => {
                 <div className="md:w-64 flex-shrink-0">
                     <div className="sticky top-6">
                         <div className="mb-6">
-
                             <nav className="border-l-2 border-[#CCD8FF]">
                                 <ul className="space-y-2">
                                     {helpSections.map((section) => (
