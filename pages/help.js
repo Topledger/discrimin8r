@@ -10,7 +10,7 @@ const helpSections = [
     {
         id: 'introduction',
         title: 'Introduction',
-        content: `Discrimin8r is a powerful new public tool designed for developers and analytics professionals building on Solana.
+        content: `Discrimin8r is a powerful public tool designed for developers and analytics professionals building on Solana.
 
 Discrimin8r simplifies working with Anchor-based programs and offers a suite of features to streamline your development workflow, improve analytics capabilities, and enhance program verification processes.
 
