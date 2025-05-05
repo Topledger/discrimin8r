@@ -81,10 +81,10 @@ const menuItems = [
 
 const aboutMenuItem = {
     name: 'About Top Ledger',
-    path: 'https://topledger.xyz',
+    path: '/about',
     icon: (
         <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5">
-            <path strokeLinecap="round" strokeLinejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+            <path strokeLinecap="round" strokeLinejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
         </svg>
     )
 };
@@ -214,8 +214,6 @@ const Sidebar = ({ onCollapse }) => {
             <div className={`${isCollapsed ? 'px-2' : 'px-4'} py-4 transition-all duration-500 ease-in-out border-t border-[#CCD8FF]`}>
                 <Link
                     href={aboutMenuItem.path}
-                    target="_blank"
-                    rel="noopener noreferrer"
                     className="flex items-center h-[52px] px-4 transition-all duration-500 ease-in-out group relative text-[#657082] hover:bg-[#F6F8FF]"
                 >
                     <div className="w-6 flex items-center justify-start transition-all duration-500 ease-in-out">
