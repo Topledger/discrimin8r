@@ -23,7 +23,7 @@ const AboutTopLedger = () => {
 
                 {/* Key Stats Section */}
                 <div id="key-stats" className="mb-12">
-                    <h2 className="text-xl font-medium text-[#576EB7] mb-4">Key Stats</h2>
+                    <h2 className="text-lg font-semibold text-[#333333] mb-4">Key Stats</h2>
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                         {/* Stat 1 */}
                         <div className="bg-white rounded-[8px] p-6 shadow-sm border border-[#CCD8FF]">
@@ -54,7 +54,7 @@ const AboutTopLedger = () => {
 
                 {/* Our Products Section */}
                 <div id="our-products" className="mb-12">
-                    <h2 className="text-xl font-medium text-[#576EB7] mb-4">Our Products</h2>
+                    <h2 className="text-lg font-semibold text-[#333333] mb-4">Our Products</h2>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         {/* Product 1 */}
                         <div className="border border-[#CCD8FF] rounded-[8px] p-6">
@@ -125,7 +125,7 @@ const AboutTopLedger = () => {
 
                 {/* CTA section */}
                 <div id="ready-to-build" className="mb-12">
-                    <h2 className="text-xl font-bold text-[#333333] mb-4">Ready to build with crystal-clear data?</h2>
+                    <h2 className="text-lg font-semibold text-[#333333] mb-4">Ready to build with crystal-clear data?</h2>
                     <div className="prose prose-sm max-w-none">
                         <p className="text-[#666666] text-sm mb-6">
                             Whether you're a DeFi protocol, trading firm, or enterprise—TopLedger accelerates your product with low-latency, high-fidelity analytics.
@@ -144,7 +144,7 @@ const AboutTopLedger = () => {
 
                 {/* Contact section */}
                 <div id="contact-us" className="mb-12">
-                    <h2 className="text-xl font-bold text-[#333333] mb-4">Contact Us</h2>
+                    <h2 className="text-lg font-semibold text-[#333333] mb-4">Contact Us</h2>
                     <div className="flex flex-col md:flex-row items-center gap-6">
                         <a href="https://topledger.xyz" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 text-[#576EB7] hover:text-[#4457A1] transition-colors">
                             <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5">
