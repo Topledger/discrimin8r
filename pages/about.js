@@ -14,114 +14,13 @@ const AboutTopLedger = () => {
 
                     <div className="prose prose-sm max-w-none">
                         <p className="text-[#666666] text-sm mb-4">
-                            TopLedger turns raw on-chain events into actionable intelligence—so builders, traders, and institutions make confident decisions in milliseconds.
+                            Top Ledger turns raw on-chain events into actionable intelligence—so builders, traders, and institutions make confident decisions in milliseconds.
                         </p>
 
                     </div>
-
-                </div>
-
-                {/* Key Stats Section */}
-                <div id="key-stats" className="mb-12">
-                    <h2 className="text-lg font-semibold text-[#333333] mb-4">Key Stats</h2>
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                        {/* Stat 1 */}
-                        <div className="bg-white rounded-[8px] p-6 shadow-sm border border-[#CCD8FF]">
-                            <p className="text-2xl font-medium  text-[#576EB7] text-center">3+</p>
-                            <p className="text-sm text-[#666666] text-center mt-2">Years in Solana</p>
-                        </div>
-
-                        {/* Stat 2 */}
-                        <div className="bg-white rounded-[8px] p-6 shadow-sm border border-[#CCD8FF]">
-                            <p className="text-2xl font-medium text-[#576EB7] text-center">Billion+</p>
-                            <p className="text-sm text-[#666666] text-center mt-2">Indexed Transactions</p>
-                        </div>
-
-                        {/* Stat 3 */}
-                        <div className="bg-white rounded-[8px] p-6 shadow-sm border border-[#CCD8FF]">
-                            <p className="text-2xl font-medium  text-[#576EB7] text-center">50+</p>
-                            <p className="text-sm text-[#666666] text-center mt-2">Clients Served</p>
-                        </div>
-
-                        {/* Stat 4 */}
-                        <div className="bg-white rounded-[8px] p-6 shadow-sm border border-[#CCD8FF]">
-                            <p className="text-2xl font-medium  text-[#576EB7] text-center">{'< 0.01s'}</p>
-                            <p className="text-sm text-[#666666] text-center mt-2">Data Latency</p>
-                        </div>
-                    </div>
                     <hr className="mt-8 border-t border-[#CCD8FF]" />
                 </div>
 
-                {/* Our Products Section */}
-                <div id="our-products" className="mb-12">
-                    <h2 className="text-lg font-semibold text-[#333333] mb-4">Our Products</h2>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        {/* Product 1 */}
-                        <div className="border border-[#CCD8FF] rounded-[8px] p-6">
-                            <div className="flex items-center gap-3 mb-4">
-                                <div className=" p-2">
-                                    <svg className="w-5 h-5 text-[#576EB7]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5">
-                                        <path strokeLinecap="round" strokeLinejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
-                                    </svg>
-                                </div>
-                                <h3 className="text-[#576EB7] font-medium">Flash.Trade Insights</h3>
-                            </div>
-                            <p className="text-[#666666] text-sm mb-3">
-                                Real-time perpetuals analytics & risk dashboards.
-                            </p>
-
-                        </div>
-
-                        {/* Product 2 */}
-                        <div className="border border-[#CCD8FF] rounded-[8px] p-6">
-                            <div className="flex items-center gap-3 mb-4">
-                                <div className=" p-2 ">
-                                    <svg className="w-5 h-5 text-[#576EB7]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5">
-                                        <path strokeLinecap="round" strokeLinejoin="round" d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                                    </svg>
-                                </div>
-                                <h3 className="text-[#576EB7] font-medium">Cursor AI for Solana</h3>
-                            </div>
-                            <p className="text-[#666666] text-sm mb-3">
-                                Query on-chain & off-chain data using natural language.
-                            </p>
-
-                        </div>
-
-                        {/* Product 3 */}
-                        <div className="border border-[#CCD8FF] rounded-[8px] p-6">
-                            <div className="flex items-center gap-3 mb-4">
-                                <div className="p-2">
-                                    <svg className="w-5 h-5 text-[#576EB7]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5">
-                                        <path strokeLinecap="round" strokeLinejoin="round" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4" />
-                                    </svg>
-                                </div>
-                                <h3 className="text-[#576EB7] font-medium">Indexer SDK</h3>
-                            </div>
-                            <p className="text-[#666666] text-sm mb-3">
-                                Plug-and-play program decoders with Kafka & DB sinks.
-                            </p>
-
-                        </div>
-
-                        {/* Product 4 */}
-                        <div className="border border-[#CCD8FF] rounded-[8px] p-6">
-                            <div className="flex items-center gap-3 mb-4">
-                                <div className="p-2">
-                                    <svg className="w-5 h-5 text-[#576EB7]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5">
-                                        <path strokeLinecap="round" strokeLinejoin="round" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                    </svg>
-                                </div>
-                                <h3 className="text-[#576EB7] font-medium">Stablecoin Pulse</h3>
-                            </div>
-                            <p className="text-[#666666] text-sm mb-3">
-                                Institution-grade stablecoin metrics for capital allocators.
-                            </p>
-
-                        </div>
-                    </div>
-                    <hr className="mt-8 border-t border-[#CCD8FF]" />
-                </div>
 
                 {/* CTA section */}
                 <div id="ready-to-build" className="mb-12">
