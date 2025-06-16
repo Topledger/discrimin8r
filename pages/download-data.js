@@ -200,7 +200,7 @@ function DownloadData() {
     return (
         <Page
             title="Download Data"
-            subtitle={isInFolder ? "Folder contents" : "Browse project-wise decoded instruction data"}
+            subtitle={isInFolder ? "Folder contents" : "Download project-wise decoded instruction data"}
             searchValue={searchText}
             onSearchChange={setSearchText}
             showSearch={true}
