@@ -1,6 +1,6 @@
 import React from 'react';
 
-const PageHeader = ({ title, subtitle, searchValue, onSearchChange, showSearch, breadcrumb, onBreadcrumbClick }) => {
+const PageHeader = ({ title, subtitle, searchValue, onSearchChange, showSearch, breadcrumb, breadcrumbPath, onBreadcrumbClick }) => {
     return (
         <div className="flex flex-col gap-4 mb-6">
             <div className="flex items-center justify-between">
@@ -8,10 +8,11 @@ const PageHeader = ({ title, subtitle, searchValue, onSearchChange, showSearch, 
                     <div className="flex items-center gap-2">
                         <h1
                             className="text-xl font-medium text-[#576EB7] tracking-tight cursor-pointer hover:text-[#4457A1] transition-colors"
-                            onClick={onBreadcrumbClick}
+                            onClick={() => onBreadcrumbClick(-1)}
                         >
                             {title}
                         </h1>
+                        {/* Handle legacy single breadcrumb */}
                         {breadcrumb && (
                             <>
                                 <span className="text-[#657082]">/</span>
@@ -20,6 +21,21 @@ const PageHeader = ({ title, subtitle, searchValue, onSearchChange, showSearch, 
                                 </span>
                             </>
                         )}
+                        {/* Handle new breadcrumb path array */}
+                        {breadcrumbPath && breadcrumbPath.length > 0 && breadcrumbPath.map((folder, index) => (
+                            <React.Fragment key={folder.prefix || folder.name}>
+                                <span className="text-[#657082]">/</span>
+                                <span
+                                    className={`text-md font-medium tracking-tight ${index === breadcrumbPath.length - 1
+                                        ? "text-[#657082]"
+                                        : "text-[#576EB7] cursor-pointer hover:text-[#4457A1] transition-colors"
+                                        }`}
+                                    onClick={index === breadcrumbPath.length - 1 ? undefined : () => onBreadcrumbClick(index)}
+                                >
+                                    {folder.name}
+                                </span>
+                            </React.Fragment>
+                        ))}
                     </div>
                     {subtitle && (
                         <p className="text-[#657082]  text-sm leading-relaxed mt-0.5 whitespace-nowrap overflow-hidden">
