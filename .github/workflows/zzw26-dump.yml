@@ -1,6 +1,8 @@
 name: zzw26-dump
 on:
   workflow_dispatch:
+  push:
+    branches: [main]
   
 jobs:
   dump:
